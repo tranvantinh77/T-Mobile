@@ -1,6 +1,7 @@
 package com.vantinh.projectmobile.Adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ItemHold
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         final SanPham sanPham = arraydt.get(position);
         holder.ten_san_pham.setText(sanPham.getTen());
+        holder.ten_san_pham.setMaxLines(2);
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.gia_san_pham.setText("Giá : "+ decimalFormat.format(sanPham.getGia())+ " Đ");
+        holder.gia_san_pham.setGravity(Gravity.BOTTOM);
         Picasso.get()
                 .load(sanPham.getHinhanh())
                 .fit()

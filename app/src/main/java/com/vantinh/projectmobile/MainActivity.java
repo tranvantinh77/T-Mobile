@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
+import com.vantinh.projectmobile.Fragment.ForgetFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
 import com.vantinh.projectmobile.Fragment.LoginFragment;
@@ -94,6 +95,17 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,registerFragment);
+        fragmentTransaction.addToBackStack(RegisterFragment.TAG);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+        fragmentTransaction.commit();
+    }
+
+    public void goToForget() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        ForgetFragment forgetFragment = new ForgetFragment();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity,forgetFragment);
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
         bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();

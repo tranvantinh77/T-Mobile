@@ -44,13 +44,6 @@ public class LoginFragment extends Fragment {
         btn_login = view.findViewById(R.id.btn_login);
 
 
-        new_username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMainActivity.goToRegister();
-            }
-        });
-
         back_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +53,21 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
+        new_username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToRegister();
+            }
+        });
+
+        forget_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToForget();
+            }
+        });
+
         return view;
     }
 }
