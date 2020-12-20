@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
+import com.vantinh.projectmobile.Fragment.SanPhamSaleFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
 import com.vantinh.projectmobile.Fragment.LoginFragment;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportParentActivityIntent();
     }
 
-
+        // chuyển fragment trong bottom navigation
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -140,6 +141,17 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,phuKienFragment);
         fragmentTransaction.addToBackStack(PhuKienFragment.TAG);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+        fragmentTransaction.commit();
+    }
+
+    public void goToSale() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        SanPhamSaleFragment sanPhamSaleFragment = new SanPhamSaleFragment();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity,sanPhamSaleFragment);
+        fragmentTransaction.addToBackStack(DienThoaiFragment.TAG);
         bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }

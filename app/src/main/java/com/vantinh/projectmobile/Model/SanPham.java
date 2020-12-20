@@ -11,7 +11,9 @@ public class SanPham implements Serializable {
     public String Mota;
     public int IDsanphamdienthoai;
     public int IDsanpham;
+    public int Status;
 
+    // constructor phu kien
     public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDsanpham) {
         this.ID = ID;
         Ten = ten;
@@ -22,6 +24,7 @@ public class SanPham implements Serializable {
         this.IDsanpham = IDsanpham;
     }
 
+    // constructor điện thoiaj, laptop
     public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDsanphamdienthoai, int IDsanpham) {
         this.ID = ID;
         Ten = ten;
@@ -31,6 +34,19 @@ public class SanPham implements Serializable {
         Mota = mota;
         this.IDsanphamdienthoai = IDsanphamdienthoai;
         this.IDsanpham = IDsanpham;
+    }
+
+    // constructor sản phẩm nổi bật
+    public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDsanphamdienthoai, int IDsanpham, int status) {
+        this.ID = ID;
+        Ten = ten;
+        Hinhanh = hinhanh;
+        Gia = gia;
+        Thongsokithuat = thongsokithuat;
+        Mota = mota;
+        this.IDsanphamdienthoai = IDsanphamdienthoai;
+        this.IDsanpham = IDsanpham;
+        Status = status;
     }
 
     public int getID() {
@@ -96,4 +112,13 @@ public class SanPham implements Serializable {
     public void setIDsanpham(int IDsanpham) {
         this.IDsanpham = IDsanpham;
     }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
+
 }

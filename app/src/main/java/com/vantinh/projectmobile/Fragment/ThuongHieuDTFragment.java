@@ -94,7 +94,7 @@ public class ThuongHieuDTFragment extends Fragment {
 
         return view;
     }
-
+        // lấy dữ liệu json
     private ArrayList<SanPham> getDataTH() {
         final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());

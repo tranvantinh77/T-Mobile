@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class ChiTietSPFragment extends Fragment {
     public static final String TAG = ChiTietSPFragment.class.getName();
     ImageView back_ct_sp, img_chi_tiet_sp;
     TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp;
+    Button btn_them_gio_hang, btn_mua_ngay;
 
     int id = 0;
     String Tenchitiet = "";
@@ -48,7 +50,10 @@ public class ChiTietSPFragment extends Fragment {
         gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
         mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
+        btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
+        btn_mua_ngay = view.findViewById(R.id.btn_mua_ngay);
 
+        //back
         back_ct_sp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +64,7 @@ public class ChiTietSPFragment extends Fragment {
             }
         });
 
+        // nhận dữ liệu
         Bundle bundleReceive = getArguments();
         if (bundleReceive != null) {
             SanPham sanPham = (SanPham) bundleReceive.getSerializable("dien_thoai");
