@@ -38,12 +38,13 @@ public class ForgetFragment extends Fragment {
         email_forget = view.findViewById(R.id.email_forget);
         btn_forget = view.findViewById(R.id.btn_forget);
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
         // Back
         back_forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

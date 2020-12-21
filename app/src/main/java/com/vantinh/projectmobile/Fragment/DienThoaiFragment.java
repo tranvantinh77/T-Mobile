@@ -58,6 +58,7 @@ public class DienThoaiFragment extends Fragment {
         rcv_thuong_hieu = view.findViewById(R.id.rcv_thuong_hieu);
         rcv_dien_thoai = view.findViewById(R.id.rcv_dien_thoai);
         mMainActivity = (MainActivity) getActivity();
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
 
         // thuong hieu
@@ -80,7 +81,6 @@ public class DienThoaiFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }
@@ -93,7 +93,7 @@ public class DienThoaiFragment extends Fragment {
             }
         });
         rcv_dien_thoai.setAdapter(sanPhamAdapter);
-//        rcv_dien_thoai.setHasFixedSize(true);
+        rcv_dien_thoai.setHasFixedSize(true);
         rcv_dien_thoai.setLayoutManager(new GridLayoutManager(getContext(),2));
 
 

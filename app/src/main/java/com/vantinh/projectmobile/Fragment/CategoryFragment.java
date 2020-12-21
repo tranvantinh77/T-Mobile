@@ -27,7 +27,7 @@ public class CategoryFragment extends Fragment {
         card_laptop = view.findViewById(R.id.card_laptop);
         card_phukien = view.findViewById(R.id.card_phukien);
 
-
+        MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         card_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

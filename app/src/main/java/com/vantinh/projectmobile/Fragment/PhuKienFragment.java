@@ -50,11 +50,13 @@ public class PhuKienFragment extends Fragment {
         rcv_phu_hien = view.findViewById(R.id.rcv_phu_kien);
         mMainActivity = (MainActivity) getActivity();
 
+
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
         back_phukien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

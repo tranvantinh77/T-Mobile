@@ -58,12 +58,13 @@ public class SanPhamSaleFragment extends Fragment {
         rcv_sale = view.findViewById(R.id.rcv_sale);
         mMainActivity = (MainActivity) getActivity();
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
 
         back_sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

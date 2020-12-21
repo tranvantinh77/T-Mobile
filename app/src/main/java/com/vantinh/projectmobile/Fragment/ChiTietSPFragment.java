@@ -53,12 +53,14 @@ public class ChiTietSPFragment extends Fragment {
         btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
         btn_mua_ngay = view.findViewById(R.id.btn_mua_ngay);
 
+
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
         //back
         back_ct_sp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

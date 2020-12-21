@@ -44,11 +44,12 @@ public class LoginFragment extends Fragment {
         btn_login = view.findViewById(R.id.btn_login);
 
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
         back_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

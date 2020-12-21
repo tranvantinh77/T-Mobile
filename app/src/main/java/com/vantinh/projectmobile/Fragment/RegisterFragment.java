@@ -40,6 +40,8 @@ public class RegisterFragment extends Fragment {
         enterpass_register = view.findViewById(R.id.enterpass_register);
         btn_register = view.findViewById(R.id.btn_register);
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
 
         back_register.setOnClickListener(new View.OnClickListener() {
             @Override

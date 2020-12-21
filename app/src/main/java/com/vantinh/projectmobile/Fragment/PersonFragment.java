@@ -28,6 +28,8 @@ public class PersonFragment extends Fragment {
         //Hooks
         textLogin = view.findViewById(R.id.textLogin);
 
+        MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
+
         textLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

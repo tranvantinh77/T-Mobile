@@ -55,7 +55,7 @@ public class LaptopFragment extends Fragment {
         rcv_laptop = view.findViewById(R.id.rcv_laptop);
         mMainActivity = (MainActivity) getActivity();
 
-
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
         ThuongHieuAdapter thuongHieuAdapter = new ThuongHieuAdapter(getContext());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getContext(), RecyclerView.HORIZONTAL, false);
@@ -73,7 +73,6 @@ public class LaptopFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }
@@ -86,7 +85,7 @@ public class LaptopFragment extends Fragment {
             }
         });
         rcv_laptop.setAdapter(sanPhamAdapter);
-//        rcv_dien_thoai.setHasFixedSize(true);
+        rcv_laptop.setHasFixedSize(true);
         rcv_laptop.setLayoutManager(new GridLayoutManager(getContext(),2));
 
 

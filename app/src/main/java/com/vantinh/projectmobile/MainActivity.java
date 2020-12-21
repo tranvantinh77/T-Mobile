@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,blankFragment);
         fragmentTransaction.addToBackStack(LoginFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,registerFragment);
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -108,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,forgetFragment);
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,dienThoaiFragment);
         fragmentTransaction.addToBackStack(DienThoaiFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -130,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,laptopFragment);
         fragmentTransaction.addToBackStack(LaptopFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -141,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,phuKienFragment);
         fragmentTransaction.addToBackStack(PhuKienFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -152,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,sanPhamSaleFragment);
         fragmentTransaction.addToBackStack(DienThoaiFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -170,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentActivity,thuongHieuDTFragment);
 
         fragmentTransaction.addToBackStack(ThuongHieuDTFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -188,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentActivity,thuongHieuLaptopFragment);
 
         fragmentTransaction.addToBackStack(ThuongHieuLaptopFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 
@@ -206,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentActivity,chiTietSPFragment);
 
         fragmentTransaction.addToBackStack(ChiTietSPFragment.TAG);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
         fragmentTransaction.commit();
     }
 

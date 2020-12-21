@@ -60,13 +60,13 @@ public class ThuongHieuLaptopFragment extends Fragment {
         rcv_thuong_hieu_laptop = view.findViewById(R.id.rcv_thuong_hieu_laptop);
         mMainActivity = (MainActivity) getActivity();
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
         // Back
         back_thuong_hieu_laptop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }

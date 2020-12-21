@@ -61,13 +61,14 @@ public class ThuongHieuDTFragment extends Fragment {
         rcv_thuong_hieu_dien_thoai = view.findViewById(R.id.rcv_thuong_hieu_dien_thoai);
         mMainActivity = (MainActivity) getActivity();
 
+        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
 
         // Back
         back_thuong_hieu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
-                    MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
                     getFragmentManager().popBackStack();
                 }
             }
