@@ -6,4 +6,5 @@ public class Server {
     public static String duongdanlaptop = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamlaptop.php";
     public static String duongdanthlaptop = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamthuonghieulaptop.php";
     public static String duongdanphukien = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamphukien.php";
+    public static String duongdansale = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamgiamgia.php";
 }
