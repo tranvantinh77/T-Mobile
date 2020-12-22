@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vantinh.projectmobile.BottomSheetAddCart;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
-import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.R;
 
 import java.text.DecimalFormat;
@@ -51,8 +51,6 @@ public class ChiTietSPFragment extends Fragment {
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
         mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
         btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
-        btn_mua_ngay = view.findViewById(R.id.btn_mua_ngay);
-
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -90,6 +88,21 @@ public class ChiTietSPFragment extends Fragment {
             }
         }
 
+        btn_them_gio_hang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                BottomSheetAddCart bottomSheet = new BottomSheetAddCart();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("ten", Tenchitiet);
+                bundle.putInt("gia",Giachitiet);
+                bundle.putString("hinhanh", Hinhanhchitiet);
+                bundle.putString("btn_them_gio_hang","Thêm vào giỏ hàng");
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getFragmentManager(),"aaaa");
+            }
+        });
 
 
         return view;

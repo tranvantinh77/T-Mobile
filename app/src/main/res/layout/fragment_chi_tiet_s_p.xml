@@ -154,8 +154,7 @@
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
         android:gravity="center|bottom"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_them_gio_hang"
@@ -163,25 +162,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
-            android:layout_weight="1"
-            android:background="#26ab9a"
+            android:background="@color/colorPrimary"
             android:text="Thêm vào giỏ hàng"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btn_mua_ngay"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="Mua ngay"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_mua_ngay"-->
+<!--            style="?android:attr/buttonStyleSmall"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal|center"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:text="Mua ngay"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="18sp" />-->
 
     </LinearLayout>
 

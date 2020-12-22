@@ -148,12 +148,12 @@ public class DienThoaiFragment extends Fragment {
     private List<ThuongHieu> getListData() {
         List<ThuongHieu> list = new ArrayList<>();
 
-        list.add(new ThuongHieu(R.drawable.iphone, "IPHONE",1));
-        list.add(new ThuongHieu(R.drawable.samsung, "SAMSUNG",2));
-        list.add(new ThuongHieu(R.drawable.xiaomi, "XIAOMI",5));
-        list.add(new ThuongHieu(R.drawable.vsmart, "VSMART",6));
-        list.add(new ThuongHieu(R.drawable.realme, "REALME",4));
-        list.add(new ThuongHieu(R.drawable.oppo, "OPPO",3));
+        list.add(new ThuongHieu(R.drawable.iphone, "Iphone",1));
+        list.add(new ThuongHieu(R.drawable.samsung, "Samsung",2));
+        list.add(new ThuongHieu(R.drawable.xiaomi, "Xiaomi",5));
+        list.add(new ThuongHieu(R.drawable.vsmart, "Vsmart",6));
+        list.add(new ThuongHieu(R.drawable.realme, "Realme",4));
+        list.add(new ThuongHieu(R.drawable.oppo, "Oppo",3));
 
         return list;
     }
