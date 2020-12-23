@@ -58,6 +58,41 @@ public class BottomSheetAddCart extends BottomSheetDialogFragment {
                 .into(img_sp_btsheet);
         btn_order_or_buynow.setText(btn);
 
+
+        btn_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sl1=Integer.parseInt(btn_so_luong.getText().toString());
+                int slmoi=Integer.parseInt(btn_so_luong.getText().toString());
+                btn_so_luong.setText(slmoi+"");
+
+                if (slmoi <= 1) {
+                    btn_plus.setEnabled(true);
+                    btn_minus.setEnabled(false);
+                    btn_so_luong.setText(slmoi+"");
+                } else {
+                    btn_plus.setEnabled(true);
+                    btn_minus.setEnabled(true);
+                    slmoi-=1;
+                    btn_so_luong.setText(slmoi+"");
+                }
+            }
+        });
+
+
+        btn_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sl1=Integer.parseInt(btn_so_luong.getText().toString());
+                int slmoi=Integer.parseInt(btn_so_luong.getText().toString());
+                slmoi+=1;
+                btn_so_luong.setText(slmoi+"");
+                btn_minus.setEnabled(true);
+                btn_so_luong.setText(slmoi+"");
+
+            }
+        });
+
        return view;
     }
 
