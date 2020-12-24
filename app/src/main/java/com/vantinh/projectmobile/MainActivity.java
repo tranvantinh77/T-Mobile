@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
+import com.vantinh.projectmobile.Fragment.GioHangFragment;
 import com.vantinh.projectmobile.Fragment.SanPhamSaleFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
@@ -24,6 +25,7 @@ import com.vantinh.projectmobile.Fragment.PersonFragment;
 import com.vantinh.projectmobile.Fragment.PhuKienFragment;
 import com.vantinh.projectmobile.Fragment.RegisterFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuLaptopFragment;
+import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
@@ -197,6 +199,19 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmentActivity,chiTietSPFragment);
 
         fragmentTransaction.addToBackStack(ChiTietSPFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToGioHang() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        GioHangFragment gioHangFragment = new GioHangFragment();
+
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity,gioHangFragment);
+
+        fragmentTransaction.addToBackStack(gioHangFragment.TAG);
         fragmentTransaction.commit();
     }
 

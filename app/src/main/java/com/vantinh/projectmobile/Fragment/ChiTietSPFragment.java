@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
-import com.vantinh.projectmobile.BottomSheetAddCart;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
@@ -22,9 +23,12 @@ import java.text.DecimalFormat;
 
 public class ChiTietSPFragment extends Fragment {
     public static final String TAG = ChiTietSPFragment.class.getName();
-    ImageView back_ct_sp, img_chi_tiet_sp;
-    TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp;
-    Button btn_them_gio_hang, btn_mua_ngay;
+    ImageView back_ct_sp, img_chi_tiet_sp, img_sp_btsheet;
+    TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
+    Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
+
+    MainActivity mMainActivity;
+    LinearLayout linearLayout;
 
     int id = 0;
     String Tenchitiet = "";
@@ -35,12 +39,13 @@ public class ChiTietSPFragment extends Fragment {
     int Idsanpham = 0;
 
     View view;
+
     public ChiTietSPFragment() {
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chi_tiet_s_p, container, false);
 
@@ -51,6 +56,9 @@ public class ChiTietSPFragment extends Fragment {
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
         mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
         btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
+        mMainActivity = (MainActivity) getActivity();
+        linearLayout = view.findViewById(R.id.sheet);
+
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -88,23 +96,80 @@ public class ChiTietSPFragment extends Fragment {
             }
         }
 
+        // thêm vào giỏ hàng
         btn_them_gio_hang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottmSheetDialodTheme);
 
-                BottomSheetAddCart bottomSheet = new BottomSheetAddCart();
+                View bottomSheet = LayoutInflater.from(getContext()).inflate(
+                        R.layout.bottom_sheet_add_cart, linearLayout);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("ten", Tenchitiet);
-                bundle.putInt("gia",Giachitiet);
-                bundle.putString("hinhanh", Hinhanhchitiet);
-                bundle.putString("btn_them_gio_hang","Thêm vào giỏ hàng");
-                bottomSheet.setArguments(bundle);
-                bottomSheet.show(getFragmentManager(),"aaaa");
+                // ánh xạ bottom sheet
+                btn_minus = bottomSheet.findViewById(R.id.btn_minus);
+                btn_so_luong = bottomSheet.findViewById(R.id.btn_so_luong);
+                btn_plus = bottomSheet.findViewById(R.id.btn_plus);
+                img_sp_btsheet = bottomSheet.findViewById(R.id.img_sp_btsheet);
+                ten_sp_btsheet = bottomSheet.findViewById(R.id.ten_sp_btsheet);
+                gia_sp_btsheet = bottomSheet.findViewById(R.id.gia_sp_btsheet);
+                btn_order_or_buynow = bottomSheet.findViewById(R.id.btn_order_or_buynow);
+
+                // set thông tin sản phẩm
+                ten_sp_btsheet.setText(ten_chi_tiet_sp.getText());
+                gia_sp_btsheet.setText(gia_chi_tiet_sp.getText());
+                Picasso.get()
+                        .load(Hinhanhchitiet)
+                        .into(img_sp_btsheet);
+
+                // chuyển sang giỏ hàng
+                btn_order_or_buynow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMainActivity.goToGioHang();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                // giảm số lượng
+                btn_minus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
+                        int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
+                        btn_so_luong.setText(slmoi + "");
+
+                        if (slmoi <= 1) {
+                            btn_plus.setEnabled(true);
+                            btn_minus.setEnabled(false);
+                            btn_so_luong.setText(slmoi + "");
+                        } else {
+                            btn_plus.setEnabled(true);
+                            btn_minus.setEnabled(true);
+                            slmoi -= 1;
+                            btn_so_luong.setText(slmoi + "");
+                        }
+                    }
+                });
+
+                // tăng số lượng
+                btn_plus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
+                        int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
+                        slmoi += 1;
+                        btn_so_luong.setText(slmoi + "");
+                        btn_minus.setEnabled(true);
+                        btn_so_luong.setText(slmoi + "");
+                    }
+                });
+
+                bottomSheetDialog.setContentView(bottomSheet);
+                bottomSheetDialog.show();
             }
         });
 
 
         return view;
     }
+
 }
