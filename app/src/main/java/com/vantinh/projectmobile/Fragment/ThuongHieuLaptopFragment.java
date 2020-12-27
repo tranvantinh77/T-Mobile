@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class ThuongHieuLaptopFragment extends Fragment {
     public static final String TAG = ThuongHieuLaptopFragment.class.getName();
-    ImageView back_thuong_hieu_laptop;
+    ImageView back_thuong_hieu_laptop, shopping_thlt;
     TextView ten_thuong_hieu_laptop;
     RecyclerView rcv_thuong_hieu_laptop;
     private int idsanphamlaptop;
@@ -56,6 +56,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
 
         // ánh xạ
         back_thuong_hieu_laptop = view.findViewById(R.id.back_thuong_hieu_laptop);
+        shopping_thlt = view.findViewById(R.id.shopping_thlt);
         ten_thuong_hieu_laptop = view.findViewById(R.id.ten_thuong_hieu_laptop);
         rcv_thuong_hieu_laptop = view.findViewById(R.id.rcv_thuong_hieu_laptop);
         mMainActivity = (MainActivity) getActivity();
@@ -71,6 +72,14 @@ public class ThuongHieuLaptopFragment extends Fragment {
                 }
             }
         });
+
+        shopping_thlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToGioHang();
+            }
+        });
+
         // Nhận dữ liệu
         Bundle bundleReceive = getArguments();
         if (bundleReceive != null) {

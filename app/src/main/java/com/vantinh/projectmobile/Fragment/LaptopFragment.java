@@ -33,7 +33,7 @@ import java.util.List;
 
 public class LaptopFragment extends Fragment {
     public static final String TAG = LaptopFragment.class.getName();
-    ImageView back_laptop;
+    ImageView back_laptop, shopping_lt;
     RecyclerView rcv_thuong_hieu_lt, rcv_laptop;
     SanPhamAdapter sanPhamAdapter;
     MainActivity mMainActivity;
@@ -51,6 +51,7 @@ public class LaptopFragment extends Fragment {
 
         // ánh xạ
         back_laptop = view.findViewById(R.id.back_laptop);
+        shopping_lt = view.findViewById(R.id.shopping_lt);
         rcv_thuong_hieu_lt = view.findViewById(R.id.rcv_thuong_hieu_lt);
         rcv_laptop = view.findViewById(R.id.rcv_laptop);
         mMainActivity = (MainActivity) getActivity();
@@ -75,6 +76,13 @@ public class LaptopFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        shopping_lt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mMainActivity.goToGioHang();
             }
         });
 

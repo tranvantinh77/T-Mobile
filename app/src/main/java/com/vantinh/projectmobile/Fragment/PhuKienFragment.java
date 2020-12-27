@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class PhuKienFragment extends Fragment {
     public static final String TAG = PhuKienFragment.class.getName();
-    ImageView back_phukien;
+    ImageView back_phukien, shopping_pk;
     RecyclerView  rcv_phu_hien;
     SanPhamAdapter sanPhamAdapter;
     MainActivity mMainActivity;
@@ -47,6 +47,7 @@ public class PhuKienFragment extends Fragment {
 
         // ánh xạ
         back_phukien = view.findViewById(R.id.back_phukien);
+        shopping_pk = view.findViewById(R.id.shopping_pk);
         rcv_phu_hien = view.findViewById(R.id.rcv_phu_kien);
         mMainActivity = (MainActivity) getActivity();
 
@@ -59,6 +60,13 @@ public class PhuKienFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        shopping_pk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mMainActivity.goToGioHang();
             }
         });
 

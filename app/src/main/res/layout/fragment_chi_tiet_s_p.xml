@@ -8,31 +8,47 @@
     tools:context=".Fragment.DienThoaiFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorPrimaryDark">
 
-
-        <ImageView
-            android:id="@+id/back_ct_sp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_back_white" />
-
-        <TextView
-            android:id="@+id/ten_thuong_hieu"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:text="Chi tết sản phẩm"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:textStyle="bold">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
 
-        </TextView>
+            <ImageView
+                android:id="@+id/back_ct_sp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_back_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Chi tết sản phẩm"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/shopping_ctsp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_shopping_cart"
+                android:layout_gravity="center">
+
+            </ImageView>
+
+        </LinearLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView

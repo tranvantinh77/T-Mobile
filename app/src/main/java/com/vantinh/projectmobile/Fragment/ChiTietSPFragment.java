@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
 
 public class ChiTietSPFragment extends Fragment {
     public static final String TAG = ChiTietSPFragment.class.getName();
-    ImageView back_ct_sp, img_chi_tiet_sp, img_sp_btsheet;
+    ImageView back_ct_sp, img_chi_tiet_sp, img_sp_btsheet, shopping_ctsp;
     TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
     Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
 
@@ -52,6 +52,7 @@ public class ChiTietSPFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_chi_tiet_s_p, container, false);
 
         back_ct_sp = view.findViewById(R.id.back_ct_sp);
+        shopping_ctsp = view.findViewById(R.id.shopping_ctsp);
         img_chi_tiet_sp = view.findViewById(R.id.img_chi_tiet_sp);
         ten_chi_tiet_sp = view.findViewById(R.id.ten_chi_tiet_sp);
         gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
@@ -71,6 +72,13 @@ public class ChiTietSPFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        shopping_ctsp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              mMainActivity.goToGioHang();
             }
         });
 

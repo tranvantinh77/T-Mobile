@@ -37,7 +37,7 @@ import java.util.Objects;
 
 public class DienThoaiFragment extends Fragment {
     public static final String TAG = DienThoaiFragment.class.getName();
-    ImageView back_dienthoai;
+    ImageView back_dienthoai, shopping_dt;
     RecyclerView rcv_thuong_hieu, rcv_dien_thoai;
     SanPhamAdapter sanPhamAdapter;
     private MainActivity mMainActivity;
@@ -55,6 +55,7 @@ public class DienThoaiFragment extends Fragment {
 
         // ánh xạ
         back_dienthoai = view.findViewById(R.id.back_dienthoai);
+        shopping_dt = view.findViewById(R.id.shopping_dt);
         rcv_thuong_hieu = view.findViewById(R.id.rcv_thuong_hieu);
         rcv_dien_thoai = view.findViewById(R.id.rcv_dien_thoai);
         mMainActivity = (MainActivity) getActivity();
@@ -83,6 +84,13 @@ public class DienThoaiFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        shopping_dt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToGioHang();
             }
         });
 

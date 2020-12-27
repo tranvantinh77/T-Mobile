@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vantinh.projectmobile.Fragment.GioHangFragment;
 import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.R;
 

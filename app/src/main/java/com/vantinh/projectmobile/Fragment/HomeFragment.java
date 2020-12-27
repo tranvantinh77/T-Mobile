@@ -1,14 +1,18 @@
 package com.vantinh.projectmobile.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +44,9 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
+    Toolbar toolbar;
     ImageSlider imageSlider;
+    ImageView shopping_cart;
     TextView xem_san_pham_sale, xem_dien_thoai, xem_laptop;
     RecyclerView rcv_san_pham_sale, rcv_dien_thoai_noibat, rcv_laptop_noibat;
 
@@ -65,6 +71,8 @@ public class HomeFragment extends Fragment {
         xem_san_pham_sale = view.findViewById(R.id.xem_san_pham_sale);
         xem_dien_thoai = view.findViewById(R.id.xem_dien_thoai);
         xem_laptop = view.findViewById(R.id.xem_laptop);
+        toolbar = view.findViewById(R.id.toolbarHome);
+        shopping_cart = view.findViewById(R.id.shopping_home);
         rcv_san_pham_sale = view.findViewById(R.id.rcv_san_pham_sale);
         rcv_dien_thoai_noibat = view.findViewById(R.id.rcv_dien_thoai_noibat);
         rcv_laptop_noibat = view.findViewById(R.id.rcv_laptop_noibat);
@@ -102,6 +110,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        shopping_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToGioHang();
+            }
+        });
 
         saleAdapter = new SaleAdapter(getDataSale(), new SaleAdapter.IClickItemListener() {
             @Override
@@ -138,6 +152,7 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
 
     private ArrayList<SanPhamSale> getDataSale() {
         final ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();

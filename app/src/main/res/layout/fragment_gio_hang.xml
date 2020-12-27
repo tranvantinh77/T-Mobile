@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/back_gio_hang"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_back_white" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_marginRight="40dp"
-            android:text="giỏ hàng"
+            android:text="Giỏ hàng"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold">

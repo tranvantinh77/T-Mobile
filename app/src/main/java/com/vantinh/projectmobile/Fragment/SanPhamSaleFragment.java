@@ -37,7 +37,7 @@ import java.util.Map;
 
 
 public class SanPhamSaleFragment extends Fragment {
-    ImageView back_sale;
+    ImageView back_sale, shopping_gg;
     RecyclerView rcv_sale;
     private MainActivity mMainActivity;
     SaleAdapter saleAdapter;
@@ -55,6 +55,7 @@ public class SanPhamSaleFragment extends Fragment {
 
         // Ánh xạ
         back_sale = view.findViewById(R.id.back_sale);
+        shopping_gg = view.findViewById(R.id.shopping_gg);
         rcv_sale = view.findViewById(R.id.rcv_sale);
         mMainActivity = (MainActivity) getActivity();
 
@@ -67,6 +68,13 @@ public class SanPhamSaleFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        shopping_gg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToGioHang();
             }
         });
 
