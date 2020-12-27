@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 import com.vantinh.projectmobile.MainActivity;
+import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
 
@@ -84,6 +86,7 @@ public class ChiTietSPFragment extends Fragment {
                 Thongso = sanPham.getThongsokithuat();
                 Motachitiet = sanPham.getMota();
                 Idsanpham = sanPham.getIDsanpham();
+
                 ten_chi_tiet_sp.setText(Tenchitiet);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
                 gia_chi_tiet_sp.setText("Giá: " + decimalFormat.format(Giachitiet) + " Đ");
@@ -102,7 +105,7 @@ public class ChiTietSPFragment extends Fragment {
             public void onClick(View v) {
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottmSheetDialodTheme);
 
-                View bottomSheet = LayoutInflater.from(getContext()).inflate(
+                final View bottomSheet = LayoutInflater.from(getContext()).inflate(
                         R.layout.bottom_sheet_add_cart, linearLayout);
 
                 // ánh xạ bottom sheet
@@ -125,6 +128,24 @@ public class ChiTietSPFragment extends Fragment {
                 btn_order_or_buynow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (MainActivity.manggiohang.size() > 0) {
+                            int sl = Integer.parseInt(btn_so_luong.getText().toString());
+                            boolean exists = false; for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
+                                if (MainActivity.manggiohang.get(i).getIdsp() == id) {
+                                    MainActivity.manggiohang.get(i).setSoluongsp(MainActivity.manggiohang.get(i).getSoluongsp() + sl);
+                                    MainActivity.manggiohang.get(i).setGiasp(Giachitiet * MainActivity.manggiohang.get(i).getSoluongsp());
+                                    exists = true;
+                                }
+                            }
+                            if (exists == false) {
+                                int soluong = Integer.parseInt(btn_so_luong.getText().toString());
+                                long giaMoi = soluong * Giachitiet;
+                                MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong));
+                            }
+                        } else {
+                            int soluong = Integer.parseInt(btn_so_luong.getText().toString());
+                            long giaMoi = soluong * Giachitiet;
+                            MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong)); }
                         mMainActivity.goToGioHang();
                         bottomSheetDialog.dismiss();
                     }

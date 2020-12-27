@@ -31,8 +31,12 @@ import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
 import com.vantinh.projectmobile.ultil.CheckInternetActivity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     public static BottomNavigationView bottomNavigationView;
+    public static ArrayList<GioHang> manggiohang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Ánh xạ
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        if (manggiohang != null) {
+
+        } else {
+            manggiohang = new ArrayList<>();
+        }
 
         // Check Internet
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
