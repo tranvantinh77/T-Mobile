@@ -23,37 +23,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <CheckBox
-                        android:id="@+id/check_box"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1">
-
-                    </CheckBox>
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/xoa_san_pham"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
                         android:text="Xóa"
+                        android:layout_marginTop="5dp"
+                        android:layout_alignParentEnd="true"
                         android:textAllCaps="false"
-                        android:textSize="18sp">
+                        android:textSize="16sp">
 
                     </TextView>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -66,16 +53,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/img_san_pham_gh"
-                        android:layout_width="150dp"
-                        android:layout_height="180dp"
+                        android:layout_width="180dp"
+                        android:layout_height="200dp"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:scaleType="centerCrop">
+                        android:layout_marginLeft="10dp"
+                        android:scaleType="fitXY">
 
                     </ImageView>
 
@@ -83,7 +69,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -158,7 +145,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <ImageView
