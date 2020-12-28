@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vantinh.projectmobile.Fragment.GioHangFragment;
+import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.R;
 
@@ -68,6 +70,65 @@ public class GioHangAdapter extends BaseAdapter {
         Log.d("test",arraygiohang.get(i).getHinhanhsp());
         Picasso.get().load(arraygiohang.get(i).getHinhanhsp()).into(img_san_pham_gh);
         btn_so_luong_gh.setText(arraygiohang.get(i).getSoluongsp()+"");
+        final int sl= Integer.parseInt(btn_so_luong_gh.getText().toString());
+        final int slmoi=sl;
+
+        // giảm số lượng
+        btn_minus_gh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int sl1 = Integer.parseInt(btn_so_luong_gh.getText().toString());
+                int slmoi = Integer.parseInt(btn_so_luong_gh.getText().toString());
+                slmoi -=1;
+                btn_so_luong_gh.setText(slmoi + "");
+                MainActivity.manggiohang.get(i).setSoluongsp(slmoi);
+                MainActivity.manggiohang.get(i).setGiasp(MainActivity.manggiohang.get(i).getGiasp()*slmoi/(sl1));
+                gia_san_pham_gh.setText(MainActivity.manggiohang.get(i).getGiasp()+"");
+                long tonggiasp = 0;
+                tonggiasp = MainActivity.manggiohang.get(i).getGiasp();
+                long tongtien=0;
+                for(int i=0;i<MainActivity.manggiohang.size();i++){
+                    tongtien+=MainActivity.manggiohang.get(i).getGiasp();
+                }
+                GioHangFragment.tong_tien.setText(decimalFormat.format(tongtien)+" Đ");
+                gia_san_pham_gh.setText(decimalFormat.format(tonggiasp)+" Đ");
+
+                if (slmoi <= 1) {
+                    btn_plus_gh.setEnabled(true);
+                    btn_minus_gh.setEnabled(false);
+                    btn_so_luong_gh.setText(slmoi + "");
+                } else {
+                    btn_plus_gh.setEnabled(true);
+                    btn_minus_gh.setEnabled(true);
+                    slmoi -= 1;
+                    btn_so_luong_gh.setText(slmoi + "");
+                }
+            }
+        });
+
+        // tăng số lượng
+        btn_plus_gh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sl1=Integer.parseInt(btn_so_luong_gh.getText().toString());
+                int slmoi=Integer.parseInt(btn_so_luong_gh.getText().toString());
+                slmoi+=1;
+                btn_so_luong_gh.setText(slmoi+"");
+                MainActivity.manggiohang.get(i).setSoluongsp(slmoi);
+                MainActivity.manggiohang.get(i).setGiasp(MainActivity.manggiohang.get(i).getGiasp()*slmoi/(sl1));
+                gia_san_pham_gh.setText(MainActivity.manggiohang.get(i).getGiasp()+"");
+                long tonggiasp = 0;
+                tonggiasp = MainActivity.manggiohang.get(i).getGiasp();
+                long tongtien=0;
+                for(int i=0;i<MainActivity.manggiohang.size();i++){
+                    tongtien+=MainActivity.manggiohang.get(i).getGiasp();
+                }
+                GioHangFragment.tong_tien.setText(decimalFormat.format(tongtien)+" Đ");
+                gia_san_pham_gh.setText(decimalFormat.format(tonggiasp)+" Đ");
+                btn_minus_gh.setEnabled(true);
+                btn_so_luong_gh.setText(slmoi + "");
+            }
+        });
 
         return view;
     }

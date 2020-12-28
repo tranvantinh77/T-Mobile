@@ -32,7 +32,7 @@ public class GioHangFragment extends Fragment {
     public static final String TAG = GioHangFragment.class.getName();
     ImageView back_gio_hang;
     ListView lv_gio_hang;
-    TextView txt_thong_bao, tong_tien;
+    public static TextView txt_thong_bao, tong_tien;
     Button btn_mua_ngay;
 
     GioHangAdapter gioHangAdapter;
@@ -58,6 +58,7 @@ public class GioHangFragment extends Fragment {
 
         gioHangAdapter = new GioHangAdapter(getContext(), MainActivity.manggiohang);
         lv_gio_hang.setAdapter(gioHangAdapter);
+        eventUtil();
 
 
         mMainActivity = (MainActivity) getActivity();
@@ -87,5 +88,13 @@ public class GioHangFragment extends Fragment {
         return view;
     }
 
-
+    // tong tien
+    private void eventUtil() {
+        long tongtien = 0;
+        for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
+            tongtien += MainActivity.manggiohang.get(i).getGiasp();
+        }
+        DecimalFormat decimalFomat = new DecimalFormat("###,###,###");
+        tong_tien.setText(decimalFomat.format(tongtien) + " Đ");
+    }
 }
