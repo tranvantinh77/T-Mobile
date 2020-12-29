@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -92,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
     // Chuyển Fragment
     public void goToLogin() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        LoginFragment blankFragment = new LoginFragment();
+        LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                                                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,blankFragment);
+                .replace(R.id.fragmentActivity,loginFragment,"loginFragment");
         fragmentTransaction.addToBackStack(LoginFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         RegisterFragment registerFragment = new RegisterFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,registerFragment);
+                .replace(R.id.fragmentActivity,registerFragment,"registerFragment");
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,forgetFragment);
-        fragmentTransaction.addToBackStack(RegisterFragment.TAG);
+        fragmentTransaction.addToBackStack(ForgetFragment.TAG);
         fragmentTransaction.commit();
     }
 
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,sanPhamSaleFragment);
-        fragmentTransaction.addToBackStack(DienThoaiFragment.TAG);
+        fragmentTransaction.addToBackStack(SanPhamSaleFragment.TAG);
         fragmentTransaction.commit();
     }
 
@@ -220,8 +221,17 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,gioHangFragment);
 
-        fragmentTransaction.addToBackStack(gioHangFragment.TAG);
+        fragmentTransaction.addToBackStack(GioHangFragment.TAG);
         fragmentTransaction.commit();
     }
 
+    public void finishFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        RegisterFragment registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentByTag("registerFragment");
+        if (registerFragment != null) {
+            fragmentTransaction.remove(registerFragment);
+            fragmentTransaction.commitNow();
+        }
+
+    }
 }

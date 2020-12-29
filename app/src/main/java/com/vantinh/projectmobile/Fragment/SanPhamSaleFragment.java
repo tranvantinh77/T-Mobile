@@ -37,6 +37,7 @@ import java.util.Map;
 
 
 public class SanPhamSaleFragment extends Fragment {
+    public static final String TAG = SanPhamSaleFragment.class.getName();
     ImageView back_sale, shopping_gg;
     RecyclerView rcv_sale;
     private MainActivity mMainActivity;

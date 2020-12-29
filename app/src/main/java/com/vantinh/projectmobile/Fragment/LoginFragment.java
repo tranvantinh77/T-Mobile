@@ -69,6 +69,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+
         return view;
     }
 }

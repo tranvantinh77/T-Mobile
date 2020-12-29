@@ -1,6 +1,5 @@
 package com.vantinh.projectmobile.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -18,15 +17,18 @@ import com.vantinh.projectmobile.R;
 
 
 public class PersonFragment extends Fragment {
-    TextView textLogin;
+    public static final String TAG = PersonFragment.class.getName();
+    TextView textLogin,doi_mat_khau,dang_xuat;
     private MainActivity mMainActivity;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
+        //anh xạ
         mMainActivity = (MainActivity) getActivity();
-        //Hooks
         textLogin = view.findViewById(R.id.textLogin);
+        doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
+        dang_xuat = view.findViewById(R.id.dang_xuat);
 
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
 
