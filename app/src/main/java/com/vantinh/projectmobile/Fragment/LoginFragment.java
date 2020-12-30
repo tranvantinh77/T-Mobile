@@ -1,6 +1,5 @@
 package com.vantinh.projectmobile.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

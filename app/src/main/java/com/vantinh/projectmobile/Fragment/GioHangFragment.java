@@ -3,29 +3,20 @@ package com.vantinh.projectmobile.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vantinh.projectmobile.Adapter.GioHangAdapter;
-import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
-import com.vantinh.projectmobile.Model.GioHang;
-import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 
 public class GioHangFragment extends Fragment {
