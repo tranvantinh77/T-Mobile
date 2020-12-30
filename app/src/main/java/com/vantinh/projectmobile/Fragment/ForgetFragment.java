@@ -33,10 +33,7 @@ public class ForgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_forget, container, false);
 
-        //Ánh xạ
-        back_forget = view.findViewById(R.id.back_forget);
-        email_forget = view.findViewById(R.id.email_forget);
-        btn_forget = view.findViewById(R.id.btn_forget);
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -52,5 +49,11 @@ public class ForgetFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void anhXa(View view) {
+        back_forget = view.findViewById(R.id.back_forget);
+        email_forget = view.findViewById(R.id.email_forget);
+        btn_forget = view.findViewById(R.id.btn_forget);
     }
 }

@@ -55,15 +55,9 @@ public class ThuongHieuDTFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_thuong_hieu_dt, container, false);
 
-        // ánh xạ
-        back_thuong_hieu = view.findViewById(R.id.back_thuong_hieu);
-        shopping_thdt = view.findViewById(R.id.shopping_thdt);
-        ten_thuong_hieu = view.findViewById(R.id.ten_thuong_hieu);
-        rcv_thuong_hieu_dien_thoai = view.findViewById(R.id.rcv_thuong_hieu_dien_thoai);
-        mMainActivity = (MainActivity) getActivity();
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
-
 
         // Back
         back_thuong_hieu.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +154,14 @@ public class ThuongHieuDTFragment extends Fragment {
         requestQueue.add(stringRequest);
 
         return mangsanpham;
+    }
+
+    public void anhXa(View view) {
+        back_thuong_hieu = view.findViewById(R.id.back_thuong_hieu);
+        shopping_thdt = view.findViewById(R.id.shopping_thdt);
+        ten_thuong_hieu = view.findViewById(R.id.ten_thuong_hieu);
+        rcv_thuong_hieu_dien_thoai = view.findViewById(R.id.rcv_thuong_hieu_dien_thoai);
+        mMainActivity = (MainActivity) getActivity();
     }
 
 }

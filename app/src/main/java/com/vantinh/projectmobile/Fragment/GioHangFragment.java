@@ -49,12 +49,8 @@ public class GioHangFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_gio_hang, container, false);
-        // ánh xạ
-        back_gio_hang = view.findViewById(R.id.back_gio_hang);
-        lv_gio_hang = view.findViewById(R.id.lv_gio_hang);
-        txt_thong_bao = view.findViewById(R.id.txt_thong_bao);
-        tong_tien = view.findViewById(R.id.tong_tien);
-        btn_mua_ngay = view.findViewById(R.id.btn_mua_ngay);
+
+        anhXa(view);
 
         gioHangAdapter = new GioHangAdapter(getContext(), MainActivity.manggiohang);
         lv_gio_hang.setAdapter(gioHangAdapter);
@@ -96,5 +92,13 @@ public class GioHangFragment extends Fragment {
         }
         DecimalFormat decimalFomat = new DecimalFormat("###,###,###");
         tong_tien.setText(decimalFomat.format(tongtien) + " Đ");
+    }
+
+    public void anhXa(View view) {
+        back_gio_hang = view.findViewById(R.id.back_gio_hang);
+        lv_gio_hang = view.findViewById(R.id.lv_gio_hang);
+        txt_thong_bao = view.findViewById(R.id.txt_thong_bao);
+        tong_tien = view.findViewById(R.id.tong_tien);
+        btn_mua_ngay = view.findViewById(R.id.btn_mua_ngay);
     }
 }

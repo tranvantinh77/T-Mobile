@@ -225,13 +225,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void finishFragment() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        RegisterFragment registerFragment = (RegisterFragment) getSupportFragmentManager().findFragmentByTag("registerFragment");
-        if (registerFragment != null) {
-            fragmentTransaction.remove(registerFragment);
-            fragmentTransaction.commitNow();
-        }
-
-    }
 }

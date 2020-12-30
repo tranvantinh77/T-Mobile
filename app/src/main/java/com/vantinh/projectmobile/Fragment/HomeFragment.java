@@ -2,9 +2,6 @@ package com.vantinh.projectmobile.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -66,17 +63,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-       // Ánh xạ
-        imageSlider = view.findViewById(R.id.slider);
-        xem_san_pham_sale = view.findViewById(R.id.xem_san_pham_sale);
-        xem_dien_thoai = view.findViewById(R.id.xem_dien_thoai);
-        xem_laptop = view.findViewById(R.id.xem_laptop);
-        toolbar = view.findViewById(R.id.toolbarHome);
-        shopping_cart = view.findViewById(R.id.shopping_home);
-        rcv_san_pham_sale = view.findViewById(R.id.rcv_san_pham_sale);
-        rcv_dien_thoai_noibat = view.findViewById(R.id.rcv_dien_thoai_noibat);
-        rcv_laptop_noibat = view.findViewById(R.id.rcv_laptop_noibat);
-        mMainActivity = (MainActivity) getActivity();
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -327,5 +314,18 @@ public class HomeFragment extends Fragment {
         requestQueue.add(stringRequest);
 
         return laptop;
+    }
+
+    public void anhXa(View view) {
+        imageSlider = view.findViewById(R.id.slider);
+        xem_san_pham_sale = view.findViewById(R.id.xem_san_pham_sale);
+        xem_dien_thoai = view.findViewById(R.id.xem_dien_thoai);
+        xem_laptop = view.findViewById(R.id.xem_laptop);
+        toolbar = view.findViewById(R.id.toolbarHome);
+        shopping_cart = view.findViewById(R.id.shopping_home);
+        rcv_san_pham_sale = view.findViewById(R.id.rcv_san_pham_sale);
+        rcv_dien_thoai_noibat = view.findViewById(R.id.rcv_dien_thoai_noibat);
+        rcv_laptop_noibat = view.findViewById(R.id.rcv_laptop_noibat);
+        mMainActivity = (MainActivity) getActivity();
     }
 }

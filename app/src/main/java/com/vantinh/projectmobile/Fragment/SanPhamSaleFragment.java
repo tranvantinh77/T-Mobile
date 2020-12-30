@@ -54,11 +54,7 @@ public class SanPhamSaleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_san_pham_sale, container, false);
 
-        // Ánh xạ
-        back_sale = view.findViewById(R.id.back_sale);
-        shopping_gg = view.findViewById(R.id.shopping_gg);
-        rcv_sale = view.findViewById(R.id.rcv_sale);
-        mMainActivity = (MainActivity) getActivity();
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -148,5 +144,12 @@ public class SanPhamSaleFragment extends Fragment {
         requestQueue.add(stringRequest);
 
         return sanPhamSales;
+    }
+
+    public void anhXa(View view) {
+        back_sale = view.findViewById(R.id.back_sale);
+        shopping_gg = view.findViewById(R.id.shopping_gg);
+        rcv_sale = view.findViewById(R.id.rcv_sale);
+        mMainActivity = (MainActivity) getActivity();
     }
 }

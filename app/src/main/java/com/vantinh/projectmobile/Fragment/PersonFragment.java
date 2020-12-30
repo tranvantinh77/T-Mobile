@@ -24,11 +24,8 @@ public class PersonFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
-        //anh xạ
-        mMainActivity = (MainActivity) getActivity();
-        textLogin = view.findViewById(R.id.textLogin);
-        doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
-        dang_xuat = view.findViewById(R.id.dang_xuat);
+
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -41,5 +38,13 @@ public class PersonFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void anhXa(View view) {
+        mMainActivity = (MainActivity) getActivity();
+        textLogin = view.findViewById(R.id.textLogin);
+        doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
+        dang_xuat = view.findViewById(R.id.dang_xuat);
+
     }
 }

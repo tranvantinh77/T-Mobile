@@ -54,12 +54,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_thuong_hieu_laptop, container, false);
 
-        // ánh xạ
-        back_thuong_hieu_laptop = view.findViewById(R.id.back_thuong_hieu_laptop);
-        shopping_thlt = view.findViewById(R.id.shopping_thlt);
-        ten_thuong_hieu_laptop = view.findViewById(R.id.ten_thuong_hieu_laptop);
-        rcv_thuong_hieu_laptop = view.findViewById(R.id.rcv_thuong_hieu_laptop);
-        mMainActivity = (MainActivity) getActivity();
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -158,6 +153,14 @@ public class ThuongHieuLaptopFragment extends Fragment {
         requestQueue.add(stringRequest);
 
         return mangsanpham;
+    }
+
+    public void anhXa(View view) {
+        back_thuong_hieu_laptop = view.findViewById(R.id.back_thuong_hieu_laptop);
+        shopping_thlt = view.findViewById(R.id.shopping_thlt);
+        ten_thuong_hieu_laptop = view.findViewById(R.id.ten_thuong_hieu_laptop);
+        rcv_thuong_hieu_laptop = view.findViewById(R.id.rcv_thuong_hieu_laptop);
+        mMainActivity = (MainActivity) getActivity();
     }
 
 }

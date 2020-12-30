@@ -53,12 +53,7 @@ public class DienThoaiFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dien_thoai, container, false);
 
-        // ánh xạ
-        back_dienthoai = view.findViewById(R.id.back_dienthoai);
-        shopping_dt = view.findViewById(R.id.shopping_dt);
-        rcv_thuong_hieu = view.findViewById(R.id.rcv_thuong_hieu);
-        rcv_dien_thoai = view.findViewById(R.id.rcv_dien_thoai);
-        mMainActivity = (MainActivity) getActivity();
+        anhXa(view);
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
 
@@ -152,7 +147,6 @@ public class DienThoaiFragment extends Fragment {
         return mangsanpham;
     }
 
-
     private List<ThuongHieu> getListData() {
         List<ThuongHieu> list = new ArrayList<>();
 
@@ -164,5 +158,13 @@ public class DienThoaiFragment extends Fragment {
         list.add(new ThuongHieu(R.drawable.oppo, "Oppo",3));
 
         return list;
+    }
+
+    public void anhXa(View view) {
+        back_dienthoai = view.findViewById(R.id.back_dienthoai);
+        shopping_dt = view.findViewById(R.id.shopping_dt);
+        rcv_thuong_hieu = view.findViewById(R.id.rcv_thuong_hieu);
+        rcv_dien_thoai = view.findViewById(R.id.rcv_dien_thoai);
+        mMainActivity = (MainActivity) getActivity();
     }
 }

@@ -51,17 +51,7 @@ public class ChiTietSPFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chi_tiet_s_p, container, false);
 
-        back_ct_sp = view.findViewById(R.id.back_ct_sp);
-        shopping_ctsp = view.findViewById(R.id.shopping_ctsp);
-        img_chi_tiet_sp = view.findViewById(R.id.img_chi_tiet_sp);
-        ten_chi_tiet_sp = view.findViewById(R.id.ten_chi_tiet_sp);
-        gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
-        thong_so_sp = view.findViewById(R.id.thong_so_sp);
-        mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
-        btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
-        mMainActivity = (MainActivity) getActivity();
-        linearLayout = view.findViewById(R.id.sheet);
-
+       anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -201,4 +191,16 @@ public class ChiTietSPFragment extends Fragment {
         return view;
     }
 
+    public void anhXa(View view) {
+        back_ct_sp = view.findViewById(R.id.back_ct_sp);
+        shopping_ctsp = view.findViewById(R.id.shopping_ctsp);
+        img_chi_tiet_sp = view.findViewById(R.id.img_chi_tiet_sp);
+        ten_chi_tiet_sp = view.findViewById(R.id.ten_chi_tiet_sp);
+        gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
+        thong_so_sp = view.findViewById(R.id.thong_so_sp);
+        mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
+        btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
+        mMainActivity = (MainActivity) getActivity();
+        linearLayout = view.findViewById(R.id.sheet);
+    }
 }

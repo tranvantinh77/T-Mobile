@@ -22,10 +22,7 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         mMainActivity = (MainActivity) getActivity();
 
-        // Ánh xạ
-        card_phone = view.findViewById(R.id.card_phone);
-        card_laptop = view.findViewById(R.id.card_laptop);
-        card_phukien = view.findViewById(R.id.card_phukien);
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
         card_phone.setOnClickListener(new View.OnClickListener() {
@@ -50,5 +47,11 @@ public class CategoryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void anhXa(View view) {
+        card_phone = view.findViewById(R.id.card_phone);
+        card_laptop = view.findViewById(R.id.card_laptop);
+        card_phukien = view.findViewById(R.id.card_phukien);
     }
 }

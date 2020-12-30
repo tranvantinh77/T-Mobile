@@ -45,12 +45,7 @@ public class PhuKienFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_phu_kien, container, false);
 
-        // ánh xạ
-        back_phukien = view.findViewById(R.id.back_phukien);
-        shopping_pk = view.findViewById(R.id.shopping_pk);
-        rcv_phu_hien = view.findViewById(R.id.rcv_phu_kien);
-        mMainActivity = (MainActivity) getActivity();
-
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -124,5 +119,12 @@ public class PhuKienFragment extends Fragment {
         });
         requestQueue.add(jsonArrayRequest);
         return mangsanpham;
+    }
+
+    public void anhXa(View view) {
+        back_phukien = view.findViewById(R.id.back_phukien);
+        shopping_pk = view.findViewById(R.id.shopping_pk);
+        rcv_phu_hien = view.findViewById(R.id.rcv_phu_kien);
+        mMainActivity = (MainActivity) getActivity();
     }
 }
