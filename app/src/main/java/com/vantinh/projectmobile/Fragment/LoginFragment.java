@@ -1,9 +1,9 @@
 package com.vantinh.projectmobile.Fragment;
 
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.R;
@@ -120,4 +119,5 @@ public class LoginFragment extends Fragment {
         forget_password = view.findViewById(R.id.forget_password);
         btn_login = view.findViewById(R.id.btn_login);
     }
+
 }

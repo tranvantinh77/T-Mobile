@@ -18,8 +18,9 @@ import com.vantinh.projectmobile.R;
 
 public class PersonFragment extends Fragment {
     public static final String TAG = PersonFragment.class.getName();
-    TextView textLogin,doi_mat_khau,dang_xuat;
+    TextView textLogin,doi_mat_khau,dang_xuat,textID;
     private MainActivity mMainActivity;
+    String name ="";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +37,16 @@ public class PersonFragment extends Fragment {
 
             }
         });
+        name = String.valueOf(textID.getText());
+        if (name.equals("")) {
+            doi_mat_khau.setVisibility(View.INVISIBLE);
+            dang_xuat.setVisibility(View.INVISIBLE);
+        } else {
+            doi_mat_khau.setVisibility(View.VISIBLE);
+            dang_xuat.setVisibility(View.VISIBLE);
+            textLogin.setVisibility(View.INVISIBLE);
+        }
+
 
         return view;
     }
@@ -43,6 +54,7 @@ public class PersonFragment extends Fragment {
     public void anhXa(View view) {
         mMainActivity = (MainActivity) getActivity();
         textLogin = view.findViewById(R.id.textLogin);
+        textID = view.findViewById(R.id.textID);
         doi_mat_khau = view.findViewById(R.id.doi_mat_khau);
         dang_xuat = view.findViewById(R.id.dang_xuat);
 

@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
 
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
 
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
 }
