@@ -9,4 +9,7 @@ public class Server {
     public static String duongdansale = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamgiamgia.php";
     public static String duongdandienthoainoibat = "https://tranvantinhit77nul.000webhostapp.com/server/getdienthoainoibat.php";
     public static String duongdanlaptopnoibat = "https://tranvantinhit77nul.000webhostapp.com/server/getlaptopnoibat.php";
+    public static String signup = "https://tranvantinhit77nul.000webhostapp.com/server/signup.php";
+    public static String login = "https://tranvantinhit77nul.000webhostapp.com/server/login.php";
+    public static String getfullname = "https://tranvantinhit77nul.000webhostapp.com/server/getfullname.php";
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.R;
+import com.vantinh.projectmobile.ultil.Server;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class RegisterFragment extends Fragment {
@@ -82,7 +83,7 @@ public class RegisterFragment extends Fragment {
                     data[1] = password;
                     data[2] = email;
                     data[3] = phone;
-                    PutData putData = new PutData("https://tranvantinhit77nul.000webhostapp.com/server/signup.php", "POST", field, data);
+                    PutData putData = new PutData(Server.signup, "POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             String result = putData.getResult();

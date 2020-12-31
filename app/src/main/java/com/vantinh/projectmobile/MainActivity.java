@@ -32,7 +32,7 @@ import com.vantinh.projectmobile.ultil.CheckInternetActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
     public static ArrayList<GioHang> manggiohang;
     @Override
@@ -222,4 +222,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void senData(String fullname) {
+        PersonFragment personFragment = (PersonFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentActivity);
+        if (personFragment != null) {
+            personFragment.receviceDataFromLogin(fullname);
+        }
+    }
 }

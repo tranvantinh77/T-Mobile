@@ -1,11 +1,15 @@
 package com.vantinh.projectmobile.Fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +17,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vantinh.projectmobile.MainActivity;
+import com.vantinh.projectmobile.Model.SanPham;
+import com.vantinh.projectmobile.Model.SanPhamSale;
 import com.vantinh.projectmobile.R;
+import com.vantinh.projectmobile.ultil.Server;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class LoginFragment extends Fragment {
@@ -25,20 +50,34 @@ public class LoginFragment extends Fragment {
     TextInputEditText email_login, password_login;
     TextView new_username, forget_password;
     Button btn_login;
+    private ISendDataListener mISendDataListener;
     View view;
+
+    int id = 0;
+    String fullname = "";
 
     private MainActivity mMainActivity;
 
+    public interface ISendDataListener {
+        void senData(String fullname);
+    }
+
     public LoginFragment() {
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mISendDataListener = (ISendDataListener) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
-       mMainActivity = (MainActivity) getActivity();
+        mMainActivity = (MainActivity) getActivity();
 
-       anhXa(view);
+        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -68,7 +107,7 @@ public class LoginFragment extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               login();
+                login();
             }
         });
 
@@ -92,17 +131,51 @@ public class LoginFragment extends Fragment {
                     data[0] = email;
                     data[1] = password;
 
-                    PutData putData = new PutData("https://tranvantinhit77nul.000webhostapp.com/server/login.php", "POST", field, data);
+                    PutData putData = new PutData(Server.login, "POST", field, data);
 
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             String result = putData.getResult();
-                            if (result.equals("Login Success")){
-                                Toast.makeText(getContext(),"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            if (result.equals("Login Success")) {
+
+                                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getfullname, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response != null) {
+                                            try {
+                                                JSONArray jsonArray = new JSONArray(response);
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                                    id = jsonObject.getInt("id");
+                                                    fullname = jsonObject.getString("fullname");
+                                                    Log.d("name",fullname);
+                                                    mISendDataListener.senData(fullname);
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                }){
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        HashMap<String, String> param = new HashMap<String, String>();
+                                        param.put("email", email);
+                                        return param;
+                                    }
+                                };
+
+                                requestQueue.add(stringRequest);
+                                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 getFragmentManager().popBackStack();
-                            }
-                            else {
-                                Toast.makeText(getContext(),"Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
