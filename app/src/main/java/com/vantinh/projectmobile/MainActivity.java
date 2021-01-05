@@ -26,6 +26,7 @@ import com.vantinh.projectmobile.Fragment.RegisterFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuLaptopFragment;
 import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.Model.SanPham;
+import com.vantinh.projectmobile.Model.SanPhamSale;
 import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
 import com.vantinh.projectmobile.ultil.CheckInternetActivity;
@@ -34,7 +35,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
+    //mang san pham
     public static ArrayList<GioHang> manggiohang;
+    public static ArrayList<SanPham> mangdienthoai = new ArrayList<>();
+    public static ArrayList<SanPham> manglaptop = new ArrayList<>();
+    public static ArrayList<SanPham> mangphukien = new ArrayList<>();
+    public static ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
+    public static ArrayList<SanPham> mangthuonghieulaptop = new ArrayList<>();
+    public static ArrayList<SanPhamSale> mangsanphamsale = new ArrayList<>();
+    public static ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
+    public static ArrayList<SanPham> dienthoainoibat = new ArrayList<>();
+    public static ArrayList<SanPham> laptopnoibat = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +107,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                                                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,loginFragment,"loginFragment");
         fragmentTransaction.addToBackStack(LoginFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToDXuat() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        PersonFragment personFragment = new PersonFragment();
+        fragmentTransaction.replace(R.id.fragmentActivity,personFragment);
+        fragmentTransaction.addToBackStack(personFragment.TAG);
         fragmentTransaction.commit();
     }
 

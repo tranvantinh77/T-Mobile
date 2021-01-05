@@ -1,6 +1,9 @@
 package com.vantinh.projectmobile.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,12 @@ import com.vantinh.projectmobile.R;
 
 public class PersonFragment extends Fragment {
     public static final String TAG = PersonFragment.class.getName();
-    TextView doi_mat_khau,dang_xuat,textID,xin_chao;
+    public static TextView doi_mat_khau,dang_xuat,textID,xin_chao;
     Button btnLogin;
     private MainActivity mMainActivity;
-    public static String name ="";
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String FULLNAME_KEY = "fullname";
 
     @Nullable
     @Override
@@ -26,6 +31,8 @@ public class PersonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
 
         anhXa(view);
+        sharedPreferences = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        textID.setText(sharedPreferences.getString(FULLNAME_KEY,""));
 
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -33,27 +40,46 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mMainActivity.goToLogin();
-
             }
         });
+        if (textID.getText() != "") {
+            doi_mat_khau.setVisibility(View.VISIBLE);
+            dang_xuat.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.INVISIBLE);
+            xin_chao.setVisibility(View.VISIBLE);
+            textID.setVisibility(View.VISIBLE);
+        } else {
+            doi_mat_khau.setVisibility(View.INVISIBLE);
+            dang_xuat.setVisibility(View.INVISIBLE);
+            btnLogin.setVisibility(View.VISIBLE);
+            xin_chao.setVisibility(View.INVISIBLE);
+            textID.setVisibility(View.INVISIBLE);
+        }
 
-        doi_mat_khau.setVisibility(View.INVISIBLE);
-        dang_xuat.setVisibility(View.INVISIBLE);
-        xin_chao.setVisibility(View.INVISIBLE);
-
+        dang_xuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editora = sharedPreferences.edit();
+                editora.clear();
+                editora.commit();
+                mMainActivity.goToDXuat();
+            }
+        });
 
         return view;
     }
 
     public void receviceDataFromLogin(String fullname) {
         textID.setText(fullname);
-        if (textID.getText() != null) {
+        if (textID.getText() != "") {
             doi_mat_khau.setVisibility(View.VISIBLE);
             dang_xuat.setVisibility(View.VISIBLE);
             btnLogin.setVisibility(View.INVISIBLE);
             xin_chao.setVisibility(View.VISIBLE);
             textID.setVisibility(View.VISIBLE);
-            textID.setText(fullname);
+            editor = sharedPreferences.edit();
+            editor.putString(FULLNAME_KEY,textID.getText().toString().trim());
+            editor.commit();
         }
     }
 

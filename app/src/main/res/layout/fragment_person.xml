@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Tài khoản"
+            android:visibility="invisible"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -56,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Xin chào"
+                    android:visibility="visible"
                     android:textSize="16sp"/>
 
                 <LinearLayout
@@ -70,6 +72,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:textColor="#000"
+                        android:visibility="visible"
                         android:textStyle="bold" />
 
                     <Button
@@ -77,6 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Đăng nhập"
+                        android:visibility="visible"
                         android:textAllCaps="false"
                         android:textSize="18sp" />
 
@@ -180,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="66dp"
             android:layout_marginTop="15dp"
-            android:cursorVisible="true"
+            android:visibility="visible"
             android:text="Đổi mật khẩu"
             android:textSize="16sp" />
 
@@ -192,6 +196,7 @@
             android:layout_marginTop="15dp"
             android:cursorVisible="true"
             android:text="Đăng xuất"
+            android:visibility="visible"
             android:textColor="#D8FF2200"
             android:textSize="16sp" />
 

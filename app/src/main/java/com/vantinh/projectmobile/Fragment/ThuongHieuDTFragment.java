@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -71,7 +72,11 @@ public class ThuongHieuDTFragment extends Fragment {
         shopping_thdt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -99,7 +104,6 @@ public class ThuongHieuDTFragment extends Fragment {
     }
         // lấy dữ liệu json
     private ArrayList<SanPham> getDataTH() {
-        final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthdienthoai, new Response.Listener<String>() {
             @Override
@@ -125,7 +129,7 @@ public class ThuongHieuDTFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangsanpham.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            MainActivity.mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -152,7 +156,7 @@ public class ThuongHieuDTFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return mangsanpham;
+        return MainActivity.mangthuonghieudienthoai;
     }
 
     public void anhXa(View view) {

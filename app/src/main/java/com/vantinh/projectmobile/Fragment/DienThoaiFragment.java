@@ -1,5 +1,6 @@
 package com.vantinh.projectmobile.Fragment;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -83,7 +85,11 @@ public class DienThoaiFragment extends Fragment {
         shopping_dt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -93,6 +99,7 @@ public class DienThoaiFragment extends Fragment {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
+
         rcv_dien_thoai.setAdapter(sanPhamAdapter);
         rcv_dien_thoai.setHasFixedSize(true);
         rcv_dien_thoai.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -102,7 +109,6 @@ public class DienThoaiFragment extends Fragment {
     }
 
     private  ArrayList<SanPham> getDataDT() {
-        final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdandienthoai, new Response.Listener<JSONArray>() {
             @Override
@@ -127,7 +133,7 @@ public class DienThoaiFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangsanpham.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            MainActivity.mangdienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -142,7 +148,7 @@ public class DienThoaiFragment extends Fragment {
             }
         });
         requestQueue.add(jsonArrayRequest);
-        return mangsanpham;
+        return MainActivity.mangdienthoai;
     }
 
     private List<ThuongHieu> getListData() {

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 import com.vantinh.projectmobile.MainActivity;
@@ -64,7 +66,11 @@ public class ChiTietSPFragment extends Fragment {
         shopping_ctsp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

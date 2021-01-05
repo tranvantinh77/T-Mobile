@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
+    public static final String TAG = HomeFragment.class.getName();
     Toolbar toolbar;
     ImageSlider imageSlider;
     ImageView shopping_cart;
@@ -101,7 +103,11 @@ public class HomeFragment extends Fragment {
         shopping_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -143,7 +149,6 @@ public class HomeFragment extends Fragment {
 
 
     private ArrayList<SanPhamSale> getDataSale() {
-        final ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdansale, new Response.Listener<String>() {
             @Override
@@ -169,7 +174,7 @@ public class HomeFragment extends Fragment {
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             status = jsonObject.getInt("status");
-                            sanPhamSales.add(new SanPhamSale(id,ten,gia,giasale,hinhanh,thongsokithuat,mota,status));
+                            MainActivity.sanPhamSales.add(new SanPhamSale(id,ten,gia,giasale,hinhanh,thongsokithuat,mota,status));
                             saleAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -196,11 +201,10 @@ public class HomeFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return sanPhamSales;
+        return MainActivity.sanPhamSales;
     }
 
     private ArrayList<SanPham> getDataDT() {
-        final ArrayList<SanPham> dienthoai = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdandienthoainoibat, new Response.Listener<String>() {
             @Override
@@ -228,7 +232,7 @@ public class HomeFragment extends Fragment {
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            dienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -255,11 +259,10 @@ public class HomeFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return dienthoai;
+        return MainActivity.dienthoainoibat;
     }
 
     private ArrayList<SanPham> getDataLaptop() {
-        final ArrayList<SanPham> laptop = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanlaptopnoibat, new Response.Listener<String>() {
             @Override
@@ -287,7 +290,7 @@ public class HomeFragment extends Fragment {
                             idsanphamdienthoai = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            laptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -314,7 +317,7 @@ public class HomeFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return laptop;
+        return MainActivity.laptopnoibat;
     }
 
     public void anhXa(View view) {

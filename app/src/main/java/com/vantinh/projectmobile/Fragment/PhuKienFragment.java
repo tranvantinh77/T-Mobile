@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -61,7 +62,11 @@ public class PhuKienFragment extends Fragment {
         shopping_pk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -80,7 +85,6 @@ public class PhuKienFragment extends Fragment {
     }
 
     private  ArrayList<SanPham> getDataPhuKien() {
-        final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanphukien, new Response.Listener<JSONArray>() {
             @Override
@@ -103,7 +107,7 @@ public class PhuKienFragment extends Fragment {
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangsanpham.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanpham));
+                            MainActivity.mangphukien.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -118,7 +122,7 @@ public class PhuKienFragment extends Fragment {
             }
         });
         requestQueue.add(jsonArrayRequest);
-        return mangsanpham;
+        return MainActivity.mangphukien;
     }
 
     public void anhXa(View view) {

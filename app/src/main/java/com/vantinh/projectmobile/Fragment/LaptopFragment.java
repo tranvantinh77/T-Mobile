@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -77,7 +78,11 @@ public class LaptopFragment extends Fragment {
         shopping_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -96,7 +101,6 @@ public class LaptopFragment extends Fragment {
     }
 
     private  ArrayList<SanPham> getDataLaptop() {
-        final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanlaptop, new Response.Listener<JSONArray>() {
             @Override
@@ -121,7 +125,7 @@ public class LaptopFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangsanpham.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            MainActivity.manglaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -136,7 +140,7 @@ public class LaptopFragment extends Fragment {
             }
         });
         requestQueue.add(jsonArrayRequest);
-        return mangsanpham;
+        return MainActivity.manglaptop;
     }
 
     private List<ThuongHieu> getListDataLaptop() {

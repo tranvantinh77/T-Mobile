@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -69,7 +70,11 @@ public class SanPhamSaleFragment extends Fragment {
         shopping_gg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -87,7 +92,6 @@ public class SanPhamSaleFragment extends Fragment {
     }
 
     private ArrayList<SanPhamSale> getDataSale() {
-        final ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         Log.d("a","aaaa");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdansale, new Response.Listener<String>() {
@@ -114,7 +118,7 @@ public class SanPhamSaleFragment extends Fragment {
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             status = jsonObject.getInt("status");
-                            sanPhamSales.add(new SanPhamSale(id,ten,gia,giasale,hinhanh,thongsokithuat,mota,status));
+                            MainActivity.mangsanphamsale.add(new SanPhamSale(id,ten,gia,giasale,hinhanh,thongsokithuat,mota,status));
                             saleAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -141,7 +145,7 @@ public class SanPhamSaleFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return sanPhamSales;
+        return MainActivity.mangsanphamsale;
     }
 
     public void anhXa(View view) {

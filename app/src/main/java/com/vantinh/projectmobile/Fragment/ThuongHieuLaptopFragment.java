@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -71,7 +72,11 @@ public class ThuongHieuLaptopFragment extends Fragment {
         shopping_thlt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToGioHang();
+                if (PersonFragment.textID.getText() != "") {
+                    mMainActivity.goToGioHang();
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -99,7 +104,6 @@ public class ThuongHieuLaptopFragment extends Fragment {
     }
 
     private ArrayList<SanPham> getDataTHLaptop() {
-        final ArrayList<SanPham> mangsanpham = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthlaptop, new Response.Listener<String>() {
             @Override
@@ -125,7 +129,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangsanpham.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            MainActivity.mangthuonghieulaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -152,7 +156,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return mangsanpham;
+        return MainActivity.mangthuonghieulaptop;
     }
 
     public void anhXa(View view) {
