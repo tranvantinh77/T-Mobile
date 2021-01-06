@@ -52,13 +52,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Ánh xạ
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        if (manggiohang != null) {
-
-        } else {
-            manggiohang = new ArrayList<>();
-        }
+        createArray();
 
         // Check Internet
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
@@ -74,7 +69,34 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         getSupportParentActivityIntent();
     }
 
-        // chuyển fragment trong bottom navigation
+    private void createArray() {
+        if (manggiohang != null) {
+
+        } else {
+            manggiohang = new ArrayList<>();
+        }
+
+        if (sanPhamSales != null) {
+
+        } else {
+            sanPhamSales = new ArrayList<>();
+        }
+
+        if (dienthoainoibat != null) {
+
+        } else {
+            dienthoainoibat = new ArrayList<>();
+        }
+
+        if (laptopnoibat != null) {
+
+        } else {
+            laptopnoibat = new ArrayList<>();
+        }
+
+    }
+
+    // chuyển fragment trong bottom navigation
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -99,13 +121,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 }
             };
 
+
     // Chuyển Fragment
     public void goToLogin() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                                                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,loginFragment,"loginFragment");
+                .replace(R.id.fragmentActivity,loginFragment);
         fragmentTransaction.addToBackStack(LoginFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -123,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         RegisterFragment registerFragment = new RegisterFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,registerFragment,"registerFragment");
+                .replace(R.id.fragmentActivity,registerFragment);
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
         fragmentTransaction.commit();
     }

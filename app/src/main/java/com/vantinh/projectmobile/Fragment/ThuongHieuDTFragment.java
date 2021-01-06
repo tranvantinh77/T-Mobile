@@ -75,7 +75,7 @@ public class ThuongHieuDTFragment extends Fragment {
                 if (PersonFragment.textID.getText() != "") {
                     mMainActivity.goToGioHang();
                 } else {
-                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
                 }
             }
         });

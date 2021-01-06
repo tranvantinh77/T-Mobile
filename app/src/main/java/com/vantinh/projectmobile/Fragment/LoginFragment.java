@@ -2,9 +2,11 @@ package com.vantinh.projectmobile.Fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -23,13 +25,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vantinh.projectmobile.MainActivity;
-import com.vantinh.projectmobile.Model.SanPham;
-import com.vantinh.projectmobile.Model.SanPhamSale;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.ultil.Server;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
@@ -38,10 +43,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class LoginFragment extends Fragment {
@@ -50,7 +58,9 @@ public class LoginFragment extends Fragment {
     TextInputEditText email_login, password_login;
     TextView new_username, forget_password;
     Button btn_login;
+    CircleImageView login_facebook, login_google;
     private ISendDataListener mISendDataListener;
+    CallbackManager callbackManager;
     View view;
 
     int id = 0;
@@ -110,6 +120,36 @@ public class LoginFragment extends Fragment {
                 login();
             }
         });
+
+        FacebookSdk.sdkInitialize(getContext().getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("a","thanh cong");
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("a","that bai");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("a","loi");
+
+            }
+        });
+
+
+        login_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginFragment.this, Arrays.asList("public_profile"));
+            }
+        });
+
 
         return view;
     }
@@ -173,7 +213,9 @@ public class LoginFragment extends Fragment {
 
                                 requestQueue.add(stringRequest);
                                 Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                getFragmentManager().popBackStack();
+                                if (getFragmentManager() != null) {
+                                    getFragmentManager().popBackStack();
+                                }
                             } else {
                                 Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }
@@ -184,6 +226,12 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+    }
+
     public void anhXa(View view) {
         back_login = view.findViewById(R.id.back_login);
         email_login = view.findViewById(R.id.email_login);
@@ -191,6 +239,8 @@ public class LoginFragment extends Fragment {
         new_username = view.findViewById(R.id.new_username);
         forget_password = view.findViewById(R.id.forget_password);
         btn_login = view.findViewById(R.id.btn_login);
+        login_facebook = view.findViewById(R.id.login_facebook);
+        login_google = view.findViewById(R.id.login_google);
     }
 
 }
