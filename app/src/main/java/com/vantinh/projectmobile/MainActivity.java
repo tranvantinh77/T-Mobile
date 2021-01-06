@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.facebook.FacebookSdk;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);

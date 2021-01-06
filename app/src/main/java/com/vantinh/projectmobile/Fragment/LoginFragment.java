@@ -46,8 +46,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -123,9 +121,24 @@ public class LoginFragment extends Fragment {
 
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+
+        login_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginFragment.this, Arrays.asList("public_profile"));
+                loginFacebook();
+            }
+        });
+
+
+        return view;
+    }
+
+    private void loginFacebook() {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                getFragmentManager().popBackStack();
                 Log.d("a","thanh cong");
             }
 
@@ -142,16 +155,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
-        login_facebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginFragment.this, Arrays.asList("public_profile"));
-            }
-        });
-
-
-        return view;
     }
 
     public void login() {
