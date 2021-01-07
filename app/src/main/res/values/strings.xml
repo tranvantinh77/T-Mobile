@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">837831456999804</string>
     <string name="fb_login_protocol_scheme">fb837831456999804</string>
+    <string name="google_plus_client">981359410016-jhg707cfv9lm0q0op3ng765mggo35or1.apps.googleusercontent.com</string>
 
 
 </resources>

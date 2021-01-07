@@ -32,7 +32,6 @@ public class PhuKienFragment extends Fragment {
     public static final String TAG = PhuKienFragment.class.getName();
     ImageView back_phukien, shopping_pk;
     RecyclerView  rcv_phu_hien;
-    SanPhamAdapter sanPhamAdapter;
     MainActivity mMainActivity;
 
     View view;
@@ -70,59 +69,18 @@ public class PhuKienFragment extends Fragment {
             }
         });
 
-        sanPhamAdapter = new SanPhamAdapter(getDataPhuKien(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.getDataPhuKien(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_phu_hien.setAdapter(sanPhamAdapter);
+        rcv_phu_hien.setAdapter(mMainActivity.sanPhamAdapter);
 //        rcv_dien_thoai.setHasFixedSize(true);
         rcv_phu_hien.setLayoutManager(new GridLayoutManager(getContext(),2));
 
 
         return view;
-    }
-
-    private  ArrayList<SanPham> getDataPhuKien() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanphukien, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            id = jsonObject.getInt("id");
-                            ten = jsonObject.getString("ten");
-                            hinhanh = jsonObject.getString("hinhanh");
-                            gia = jsonObject.getInt("gia");
-                            thongsokithuat = jsonObject.getString("thongsokithuat");
-                            mota = jsonObject.getString("mota");
-                            idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangphukien.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanpham));
-                            sanPhamAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-        return MainActivity.mangphukien;
     }
 
     public void anhXa(View view) {

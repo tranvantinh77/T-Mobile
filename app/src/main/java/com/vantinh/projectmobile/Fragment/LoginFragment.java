@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -33,7 +34,15 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.textfield.TextInputEditText;
+import com.vantinh.projectmobile.DangNhap.ModelDangNhap;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.ultil.Server;
@@ -50,7 +59,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
     public static final String TAG = LoginFragment.class.getName();
     ImageView back_login;
     TextInputEditText email_login, password_login;
@@ -59,6 +68,10 @@ public class LoginFragment extends Fragment {
     CircleImageView login_facebook, login_google;
     private ISendDataListener mISendDataListener;
     CallbackManager callbackManager;
+    GoogleApiClient mGoogleApiClient;
+    ModelDangNhap modelDangNhap;
+
+    public static int SIGN_IN_GOOGLE = 117;
     View view;
 
     int id = 0;
@@ -130,6 +143,17 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        modelDangNhap = new ModelDangNhap();
+        mGoogleApiClient = modelDangNhap.LayGoogleApiClient(getContext(), 1,this);
+
+        login_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iGooglePlus = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(iGooglePlus,SIGN_IN_GOOGLE);
+            }
+        });
+
 
         return view;
     }
@@ -138,7 +162,10 @@ public class LoginFragment extends Fragment {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                getFragmentManager().popBackStack();
+                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
                 Log.d("a","thanh cong");
             }
 
@@ -233,6 +260,28 @@ public class LoginFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode,resultCode,data);
+
+        if (requestCode == SIGN_IN_GOOGLE) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        }
+    }//cho coi chỗ logout
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
     }
 
     public void anhXa(View view) {

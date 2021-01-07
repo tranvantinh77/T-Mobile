@@ -93,7 +93,6 @@ public class SanPhamSaleFragment extends Fragment {
 
     private ArrayList<SanPhamSale> getDataSale() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        Log.d("a","aaaa");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdansale, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

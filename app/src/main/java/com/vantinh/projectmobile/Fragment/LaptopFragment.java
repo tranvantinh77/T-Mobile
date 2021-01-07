@@ -36,7 +36,6 @@ public class LaptopFragment extends Fragment {
     public static final String TAG = LaptopFragment.class.getName();
     ImageView back_laptop, shopping_lt;
     RecyclerView rcv_thuong_hieu_lt, rcv_laptop;
-    SanPhamAdapter sanPhamAdapter;
     MainActivity mMainActivity;
 
     View view;
@@ -78,69 +77,26 @@ public class LaptopFragment extends Fragment {
         shopping_lt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PersonFragment.textID.getText() != "") {
                     mMainActivity.goToGioHang();
+                    if (PersonFragment.textID.getText() != "") {
                 } else {
                     Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        sanPhamAdapter = new SanPhamAdapter(getDataLaptop(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.getDataLaptop(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_laptop.setAdapter(sanPhamAdapter);
+        rcv_laptop.setAdapter(mMainActivity.sanPhamAdapter);
         rcv_laptop.setHasFixedSize(true);
         rcv_laptop.setLayoutManager(new GridLayoutManager(getContext(),2));
 
 
         return view;
-    }
-
-    private  ArrayList<SanPham> getDataLaptop() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanlaptop, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanphamlaptop = 0;
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            id = jsonObject.getInt("id");
-                            ten = jsonObject.getString("ten");
-                            hinhanh = jsonObject.getString("hinhanh");
-                            gia = jsonObject.getInt("gia");
-                            thongsokithuat = jsonObject.getString("thongsokithuat");
-                            mota = jsonObject.getString("mota");
-                            idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
-                            idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.manglaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
-                            sanPhamAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-        return MainActivity.manglaptop;
     }
 
     private List<ThuongHieu> getListDataLaptop() {

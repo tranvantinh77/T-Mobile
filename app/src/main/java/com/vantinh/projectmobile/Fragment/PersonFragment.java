@@ -19,6 +19,11 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.internal.OnConnectionFailedListener;
 import com.vantinh.projectmobile.DangNhap.ModelDangNhap;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.R;
@@ -27,7 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class PersonFragment extends Fragment {
+public class PersonFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = PersonFragment.class.getName();
     public static TextView doi_mat_khau,dang_xuat,textID,xin_chao;
     ImageView img_forget_pass, img_logout;
@@ -38,6 +43,9 @@ public class PersonFragment extends Fragment {
     String FULLNAME_KEY = "fullname";
     String tennguoidung = "";
     AccessToken accessToken;
+    ModelDangNhap modelDangNhap;
+    GoogleApiClient mGoogleApiClient;
+    GoogleSignInResult googleSignInResult;
 
     @Nullable
     @Override
@@ -56,9 +64,11 @@ public class PersonFragment extends Fragment {
                 mMainActivity.goToLogin();
             }
         });
+        modelDangNhap = new ModelDangNhap();
+        mGoogleApiClient = modelDangNhap.LayGoogleApiClient(getContext(),1,this);
 
-        laytennguoidung();
-        Log.d("token", tennguoidung);
+        laytennguoidungfb();
+        laytennguoidunggoogle();//đợi chạy thử
 
         if (textID.getText() != "") {
             doi_mat_khau.setVisibility(View.VISIBLE);
@@ -85,6 +95,10 @@ public class PersonFragment extends Fragment {
                 editora.clear();
                 editora.apply();
                 LoginManager.getInstance().logOut();
+
+                if (googleSignInResult != null) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                }
                 mMainActivity.goToDXuat();
             }
         });
@@ -93,8 +107,7 @@ public class PersonFragment extends Fragment {
         return view;
     }
 
-    private void laytennguoidung() {
-        ModelDangNhap modelDangNhap = new ModelDangNhap();
+    private void laytennguoidungfb() {
         accessToken = modelDangNhap.LayTokenFacebook();
         if (accessToken != null) {
             GraphRequest graphRequest = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -128,6 +141,23 @@ public class PersonFragment extends Fragment {
 
     }
 
+    private void laytennguoidunggoogle() {
+        googleSignInResult = modelDangNhap.LayThongTinDangNhapGG(mGoogleApiClient);
+        if (googleSignInResult != null) {
+            textID.setText(googleSignInResult.getSignInAccount().getDisplayName());
+            doi_mat_khau.setVisibility(View.VISIBLE);
+            dang_xuat.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.INVISIBLE);
+            xin_chao.setVisibility(View.VISIBLE);
+            textID.setVisibility(View.VISIBLE);
+            img_forget_pass.setVisibility(View.VISIBLE);
+            img_logout.setVisibility(View.VISIBLE);
+            editor = sharedPreferences.edit();
+            editor.putString(FULLNAME_KEY,textID.getText().toString().trim());
+            editor.apply();
+        }
+    }
+
     public void receviceDataFromLogin(String fullname) {
         textID.setText(fullname);
         if (textID.getText() != "") {
@@ -156,4 +186,15 @@ public class PersonFragment extends Fragment {
 
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+    }
 }
