@@ -3,7 +3,6 @@ package com.vantinh.projectmobile.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -23,14 +20,11 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.internal.OnConnectionFailedListener;
 import com.vantinh.projectmobile.DangNhap.ModelDangNhap;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 public class PersonFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = PersonFragment.class.getName();

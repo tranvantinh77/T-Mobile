@@ -3,19 +3,14 @@ package com.vantinh.projectmobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -41,14 +36,10 @@ import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
 import com.vantinh.projectmobile.ultil.CheckInternetActivity;
 import com.vantinh.projectmobile.ultil.Server;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;

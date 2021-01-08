@@ -2,15 +2,9 @@ package com.vantinh.projectmobile.DangNhap;
 
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
