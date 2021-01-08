@@ -97,6 +97,13 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
             }
         });
 
+        doi_mat_khau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainActivity.goToChangePassword();
+            }
+        });
+
 
         return view;
     }

@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
+import com.vantinh.projectmobile.Fragment.ChangePasswordFragment;
 import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
@@ -317,6 +318,16 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity,laptopFragment);
         fragmentTransaction.addToBackStack(LaptopFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToChangePassword() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity,changePasswordFragment);
+        fragmentTransaction.addToBackStack(ChangePasswordFragment.TAG);
         fragmentTransaction.commit();
     }
 
