@@ -108,7 +108,6 @@ public class DienThoaiFragment extends Fragment {
     }
 
 
-
     private List<ThuongHieu> getListData() {
         List<ThuongHieu> list = new ArrayList<>();
 

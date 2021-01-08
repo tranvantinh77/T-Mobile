@@ -3,10 +3,12 @@ package com.vantinh.projectmobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -37,10 +39,13 @@ import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
 import com.vantinh.projectmobile.ultil.CheckInternetActivity;
 import com.vantinh.projectmobile.ultil.Server;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public static ArrayList<SanPham> mangdienthoai = new ArrayList<>();
     public static ArrayList<SanPham> manglaptop = new ArrayList<>();
     public static ArrayList<SanPham> mangphukien = new ArrayList<>();
+    public static ArrayList<SanPham> mangsearch = new ArrayList<>();
 
     public static ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
     public static ArrayList<SanPham> mangthuonghieulaptop = new ArrayList<>();
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
             };
 
 
-    public   ArrayList<SanPham> getDataDT() {
+    public ArrayList<SanPham> getDataDT() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdandienthoai, new Response.Listener<JSONArray>() {
             @Override
@@ -160,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangdienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            MainActivity.mangdienthoai.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -178,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         return MainActivity.mangdienthoai;
     }
 
-    public   ArrayList<SanPham> getDataLaptop() {
+    public ArrayList<SanPham> getDataLaptop() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanlaptop, new Response.Listener<JSONArray>() {
             @Override
@@ -203,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.manglaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            MainActivity.manglaptop.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamlaptop, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -221,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         return MainActivity.manglaptop;
     }
 
-    public   ArrayList<SanPham> getDataPhuKien() {
+    public ArrayList<SanPham> getDataPhuKien() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanphukien, new Response.Listener<JSONArray>() {
             @Override
@@ -244,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangphukien.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanpham));
+                            MainActivity.mangphukien.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -262,13 +268,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         return MainActivity.mangphukien;
     }
 
+
     // Chuyển Fragment
     public void goToLogin() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
-                                                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,loginFragment);
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity, loginFragment);
         fragmentTransaction.addToBackStack(LoginFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -276,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public void goToDXuat() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         PersonFragment personFragment = new PersonFragment();
-        fragmentTransaction.replace(R.id.fragmentActivity,personFragment);
+        fragmentTransaction.replace(R.id.fragmentActivity, personFragment);
         fragmentTransaction.addToBackStack(personFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -286,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         RegisterFragment registerFragment = new RegisterFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,registerFragment);
+                .replace(R.id.fragmentActivity, registerFragment);
         fragmentTransaction.addToBackStack(RegisterFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -296,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         ForgetFragment forgetFragment = new ForgetFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,forgetFragment);
+                .replace(R.id.fragmentActivity, forgetFragment);
         fragmentTransaction.addToBackStack(ForgetFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -306,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         DienThoaiFragment dienThoaiFragment = new DienThoaiFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,dienThoaiFragment);
+                .replace(R.id.fragmentActivity, dienThoaiFragment);
         fragmentTransaction.addToBackStack(DienThoaiFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -316,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         LaptopFragment laptopFragment = new LaptopFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,laptopFragment);
+                .replace(R.id.fragmentActivity, laptopFragment);
         fragmentTransaction.addToBackStack(LaptopFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -326,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,changePasswordFragment);
+                .replace(R.id.fragmentActivity, changePasswordFragment);
         fragmentTransaction.addToBackStack(ChangePasswordFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -336,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         PhuKienFragment phuKienFragment = new PhuKienFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,phuKienFragment);
+                .replace(R.id.fragmentActivity, phuKienFragment);
         fragmentTransaction.addToBackStack(PhuKienFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -346,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         SanPhamSaleFragment sanPhamSaleFragment = new SanPhamSaleFragment();
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,sanPhamSaleFragment);
+                .replace(R.id.fragmentActivity, sanPhamSaleFragment);
         fragmentTransaction.addToBackStack(SanPhamSaleFragment.TAG);
         fragmentTransaction.commit();
     }
@@ -362,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
 
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,thuongHieuDTFragment);
+                .replace(R.id.fragmentActivity, thuongHieuDTFragment);
 
         fragmentTransaction.addToBackStack(ThuongHieuDTFragment.TAG);
         fragmentTransaction.commit();
@@ -379,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
 
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,thuongHieuLaptopFragment);
+                .replace(R.id.fragmentActivity, thuongHieuLaptopFragment);
 
         fragmentTransaction.addToBackStack(ThuongHieuLaptopFragment.TAG);
         fragmentTransaction.commit();
@@ -396,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
 
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,chiTietSPFragment);
+                .replace(R.id.fragmentActivity, chiTietSPFragment);
 
         fragmentTransaction.addToBackStack(ChiTietSPFragment.TAG);
         fragmentTransaction.commit();
@@ -409,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
 
         fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity,gioHangFragment);
+                .replace(R.id.fragmentActivity, gioHangFragment);
 
         fragmentTransaction.addToBackStack(GioHangFragment.TAG);
         fragmentTransaction.commit();

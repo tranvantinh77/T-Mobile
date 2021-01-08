@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarHome"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@color/colorPrimary">
 
         <LinearLayout
@@ -18,11 +18,19 @@
             android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:text=""
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"></TextView>
+            <Button
+                android:id="@+id/btnsearch"
+                android:textAllCaps="false"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="12sp"
+                android:paddingStart="5dp"
+                android:drawableStart="@drawable/ic_search"
+                android:background="@drawable/custom_search">
+                </Button>
 
             <ImageView
                 android:id="@+id/shopping_home"
@@ -32,6 +40,7 @@
                 android:layout_gravity="center">
 
             </ImageView>
+
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>

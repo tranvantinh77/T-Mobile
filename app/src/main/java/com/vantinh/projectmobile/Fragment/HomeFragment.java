@@ -1,11 +1,21 @@
 package com.vantinh.projectmobile.Fragment;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,12 +32,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.vantinh.projectmobile.Adapter.SaleAdapter;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
+import com.vantinh.projectmobile.Adapter.SearchAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.Model.SanPhamSale;
@@ -45,10 +58,12 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
     public static final String TAG = HomeFragment.class.getName();
     Toolbar toolbar;
+    Button btn_search;
     ImageSlider imageSlider;
     ImageView shopping_cart;
     TextView xem_san_pham_sale, xem_dien_thoai, xem_laptop;
     RecyclerView rcv_san_pham_sale, rcv_dien_thoai_noibat, rcv_laptop_noibat;
+    Dialog dialog;
 
     private MainActivity mMainActivity;
     SaleAdapter saleAdapter;
@@ -108,6 +123,59 @@ public class HomeFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.search);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                ImageView back_search = dialog.findViewById(R.id.back_search);
+                final EditText edt_search = dialog.findViewById(R.id.edt_search);
+                final RecyclerView rcv_search = dialog.findViewById(R.id.rcv_search);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                rcv_search.setLayoutManager(linearLayoutManager);
+                RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+                rcv_search.addItemDecoration(decoration);
+
+
+                final SearchAdapter searchAdapter = new SearchAdapter(MainActivity.mangdienthoai, new SearchAdapter.IClickItemListener() {
+                    @Override
+                    public void onClickItem(SanPham sanPham) {
+                        mMainActivity.goToCTSP(sanPham);
+                        dialog.dismiss();
+                    }
+                });
+
+                edt_search.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            searchAdapter.getFilter().filter(s);
+                            rcv_search.setAdapter(searchAdapter);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                back_search.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -330,6 +398,7 @@ public class HomeFragment extends Fragment {
         rcv_san_pham_sale = view.findViewById(R.id.rcv_san_pham_sale);
         rcv_dien_thoai_noibat = view.findViewById(R.id.rcv_dien_thoai_noibat);
         rcv_laptop_noibat = view.findViewById(R.id.rcv_laptop_noibat);
+        btn_search = view.findViewById(R.id.btnsearch);
         mMainActivity = (MainActivity) getActivity();
     }
 }
