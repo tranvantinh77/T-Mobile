@@ -9,7 +9,7 @@ public class SanPham implements Serializable {
     public Integer Gia;
     public String Thongsokithuat;
     public String Mota;
-    public int IDsanphamdienthoai;
+    public int IDloaisanpham;
     public int IDsanpham;
     public int Status;
 
@@ -25,26 +25,27 @@ public class SanPham implements Serializable {
     }
 
     // constructor điện thoiaj, laptop
-    public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDsanphamdienthoai, int IDsanpham) {
+    public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDloaisanpham, int IDsanpham) {
+
         this.ID = ID;
         Ten = ten;
         Hinhanh = hinhanh;
         Gia = gia;
         Thongsokithuat = thongsokithuat;
         Mota = mota;
-        this.IDsanphamdienthoai = IDsanphamdienthoai;
+        this.IDloaisanpham = IDloaisanpham;
         this.IDsanpham = IDsanpham;
     }
 
     // constructor sản phẩm nổi bật
-    public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDsanphamdienthoai, int IDsanpham, int status) {
+    public SanPham(int ID, String ten, String hinhanh, Integer gia, String thongsokithuat, String mota, int IDloaisanpham, int IDsanpham, int status) {
         this.ID = ID;
         Ten = ten;
         Hinhanh = hinhanh;
         Gia = gia;
         Thongsokithuat = thongsokithuat;
         Mota = mota;
-        this.IDsanphamdienthoai = IDsanphamdienthoai;
+        this.IDloaisanpham = IDloaisanpham;
         this.IDsanpham = IDsanpham;
         Status = status;
     }
@@ -97,12 +98,12 @@ public class SanPham implements Serializable {
         Mota = mota;
     }
 
-    public int getIDsanphamdienthoai() {
-        return IDsanphamdienthoai;
+    public int getIDloaisanpham() {
+        return IDloaisanpham;
     }
 
-    public void setIDsanphamdienthoai(int IDsanphamdienthoai) {
-        this.IDsanphamdienthoai = IDsanphamdienthoai;
+    public void setIDloaisanpham(int IDsanphamdienthoai) {
+        this.IDloaisanpham = IDsanphamdienthoai;
     }
 
     public int getIDsanpham() {

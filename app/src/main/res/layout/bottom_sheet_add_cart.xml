@@ -79,7 +79,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:text="-"
-                android:background="@drawable/custom_button2"
+                android:background="@drawable/button"
                 android:textSize="15sp"
                 android:gravity="center"
                 android:textStyle="bold"/>
@@ -90,7 +90,7 @@
                 android:layout_height="30dp"
                 android:text="1"
                 android:textSize="15sp"
-                android:background="@drawable/custom_button2"
+                android:background="@drawable/button"
                 android:gravity="center" />
 
             <Button
@@ -99,7 +99,7 @@
                 android:layout_height="30dp"
                 android:text="+"
                 android:textSize="15sp"
-                android:background="@drawable/custom_button2"
+                android:background="@drawable/button"
                 android:gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>

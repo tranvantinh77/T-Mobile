@@ -45,7 +45,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
@@ -56,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public static ArrayList<SanPham> mangphukien = new ArrayList<>();
     public static ArrayList<SanPham> mangsearch = new ArrayList<>();
 
-    public static ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
-    public static ArrayList<SanPham> mangthuonghieulaptop = new ArrayList<>();
     public static ArrayList<SanPhamSale> mangsanphamsale = new ArrayList<>();
     public static ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
     public static ArrayList<SanPham> dienthoainoibat = new ArrayList<>();
@@ -266,6 +263,66 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         });
         requestQueue.add(jsonArrayRequest);
         return MainActivity.mangphukien;
+    }
+
+
+    public ArrayList<SanPham> getsanphamAll() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getalldata, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null) {
+                    int id = 0;
+                    String ten = "";
+                    String hinhanh = "";
+                    Integer gia = 0;
+                    String thongsokithuat = "";
+                    String mota = "";
+                    int idsanphamdienthoai = 0;
+                    int idsanpham = 0;
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            id = jsonObject.getInt("id");
+                            ten = jsonObject.getString("ten");
+                            hinhanh = jsonObject.getString("hinhanh");
+                            gia = jsonObject.getInt("gia");
+                            thongsokithuat = jsonObject.getString("thongsokithuat");
+                            mota = jsonObject.getString("mota");
+                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idsanpham = jsonObject.getInt("idsanpham");
+                            MainActivity.mangsearch.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+        return MainActivity.mangsearch;
+    }
+
+    public ArrayList<SanPham> getall() {
+//        getDataDT();
+//        getDataLaptop();
+//        getDataPhuKien();
+
+        for (SanPham sanPham : mangdienthoai) {
+            mangsearch.add(sanPham);
+        }
+        for (SanPham sanPham : manglaptop) {
+            mangsearch.add(sanPham);
+        }
+        for (SanPham sanPham : mangphukien) {
+            mangsearch.add(sanPham);
+        }
+        return  mangsearch;
     }
 
 

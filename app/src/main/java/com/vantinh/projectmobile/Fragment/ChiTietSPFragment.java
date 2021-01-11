@@ -2,6 +2,10 @@ package com.vantinh.projectmobile.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +15,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
+import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
+import com.vantinh.projectmobile.ultil.Server;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChiTietSPFragment extends Fragment {
@@ -26,9 +46,11 @@ public class ChiTietSPFragment extends Fragment {
     ImageView back_ct_sp, img_chi_tiet_sp, img_sp_btsheet, shopping_ctsp;
     TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
     Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
+    RecyclerView rcv_sp_lien_quandt,rcv_sp_lien_quanlt,rcv_sp_lien_quanpk;
 
     MainActivity mMainActivity;
     LinearLayout linearLayout;
+    SanPhamAdapter sanPhamAdapter1, sanPhamAdapter2,sanPhamAdapter3;
 
     int id = 0;
     String Tenchitiet = "";
@@ -37,6 +59,16 @@ public class ChiTietSPFragment extends Fragment {
     String Thongso = "";
     String Motachitiet = "";
     int Idsanpham = 0;
+    int Idloaisanpham = 0;
+
+    String ten = "";
+    String hinhanh = "";
+    Integer gia = 0;
+    String thongsokithuat = "";
+    String mota = "";
+    int idsanphamdienthoai = 0;
+    int idsanphamlaptop = 0;
+    int idsanpham = 0;
 
     View view;
 
@@ -86,6 +118,8 @@ public class ChiTietSPFragment extends Fragment {
                 Thongso = sanPham.getThongsokithuat();
                 Motachitiet = sanPham.getMota();
                 Idsanpham = sanPham.getIDsanpham();
+                Idloaisanpham = sanPham.getIDloaisanpham();
+
 
                 ten_chi_tiet_sp.setText(Tenchitiet);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -189,9 +223,148 @@ public class ChiTietSPFragment extends Fragment {
             }
         });
 
+        if ( Idsanpham == 1) {
+            sanPhamAdapter1 = new SanPhamAdapter(getsplienquandt(), new SanPhamAdapter.IClickItemListener() {
+                @Override
+                public void onClickItem(SanPham sanPham) {
+                    mMainActivity.goToCTSP(sanPham);
+                }
+            });
+            rcv_sp_lien_quandt.setAdapter(sanPhamAdapter1);
+            rcv_sp_lien_quandt.setHasFixedSize(true);
+            rcv_sp_lien_quandt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        }
+
+        if (Idsanpham == 2) {
+            sanPhamAdapter2 = new SanPhamAdapter(getlienquanlaptop(), new SanPhamAdapter.IClickItemListener() {
+                @Override
+                public void onClickItem(SanPham sanPham) {
+                    mMainActivity.goToCTSP(sanPham);
+                }
+            });
+            rcv_sp_lien_quanlt.setAdapter(sanPhamAdapter2);
+            rcv_sp_lien_quanlt.setHasFixedSize(true);
+            rcv_sp_lien_quanlt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        }
+
+
+       if (Idsanpham == 3) {
+           sanPhamAdapter3 = new SanPhamAdapter(mMainActivity.getDataPhuKien(), new SanPhamAdapter.IClickItemListener() {
+               @Override
+               public void onClickItem(SanPham sanPham) {
+                   mMainActivity.goToCTSP(sanPham);
+               }
+           });
+           rcv_sp_lien_quanpk.setAdapter(sanPhamAdapter3);
+           rcv_sp_lien_quanpk.setHasFixedSize(true);
+           rcv_sp_lien_quanpk.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+       }
+
+
 
         return view;
     }
+
+    private ArrayList<SanPham> getsplienquandt() {
+       final ArrayList<SanPham> splienquan = new ArrayList<>();
+        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthdienthoai, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int id = 0;
+                if (response != null) {
+                    try {
+                        JSONArray jsonArray =new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            id = jsonObject.getInt("id");
+                            ten = jsonObject.getString("ten");
+                            hinhanh = jsonObject.getString("hinhanh");
+                            gia = jsonObject.getInt("gia");
+                            thongsokithuat = jsonObject.getString("thongsokithuat");
+                            mota = jsonObject.getString("mota");
+                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idsanpham = jsonObject.getInt("idsanpham");
+                            splienquan.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            sanPhamAdapter1.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanphamdienthoai", String.valueOf(Idloaisanpham));
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
+        return splienquan;
+    }
+
+    private ArrayList<SanPham> getlienquanlaptop() {
+        final ArrayList<SanPham> splienquan = new ArrayList<>();
+        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthlaptop, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int id = 0;
+                if (response != null) {
+                    try {
+                        JSONArray jsonArray =new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            id = jsonObject.getInt("id");
+                            ten = jsonObject.getString("ten");
+                            hinhanh = jsonObject.getString("hinhanh");
+                            gia = jsonObject.getInt("gia");
+                            thongsokithuat = jsonObject.getString("thongsokithuat");
+                            mota = jsonObject.getString("mota");
+                            idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
+                            idsanpham = jsonObject.getInt("idsanpham");
+                            splienquan.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            sanPhamAdapter2.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanphamlaptop", String.valueOf(Idloaisanpham));
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
+        return splienquan;
+    }
+
 
     public void anhXa(View view) {
         back_ct_sp = view.findViewById(R.id.back_ct_sp);
@@ -202,6 +375,9 @@ public class ChiTietSPFragment extends Fragment {
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
         mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
         btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
+        rcv_sp_lien_quandt = view.findViewById(R.id.rcv_sp_lien_quandt);
+        rcv_sp_lien_quanlt = view.findViewById(R.id.rcv_sp_lien_quanlt);
+        rcv_sp_lien_quanpk = view.findViewById(R.id.rcv_sp_lien_quanpk);
         mMainActivity = (MainActivity) getActivity();
         linearLayout = view.findViewById(R.id.sheet);
     }

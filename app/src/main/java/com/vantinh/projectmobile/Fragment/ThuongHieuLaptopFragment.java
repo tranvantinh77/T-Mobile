@@ -40,6 +40,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
     TextView ten_thuong_hieu_laptop;
     RecyclerView rcv_thuong_hieu_laptop;
     private int idsanphamlaptop;
+    ArrayList<SanPham> mangthuonghieulaptop = new ArrayList<>();
 
     MainActivity mMainActivity;
     SanPhamAdapter sanPhamAdapter;
@@ -129,7 +130,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangthuonghieulaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            mangthuonghieulaptop.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -156,7 +157,7 @@ public class ThuongHieuLaptopFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return MainActivity.mangthuonghieulaptop;
+        return mangthuonghieulaptop;
     }
 
     public void anhXa(View view) {

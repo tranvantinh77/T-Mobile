@@ -40,9 +40,10 @@ public class ThuongHieuDTFragment extends Fragment {
     TextView ten_thuong_hieu;
     RecyclerView rcv_thuong_hieu_dien_thoai;
     private int idsanphamdienthoai;
+    ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
     
     MainActivity mMainActivity;
-    SanPhamAdapter sanPhamAdapter;
+    SanPhamAdapter sanPhamAdapterth;
 
     View view;
     public ThuongHieuDTFragment() {
@@ -90,13 +91,13 @@ public class ThuongHieuDTFragment extends Fragment {
             }
         }
 
-        sanPhamAdapter = new SanPhamAdapter(getDataTH(), new SanPhamAdapter.IClickItemListener() {
+        sanPhamAdapterth = new SanPhamAdapter(getDataTH(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_thuong_hieu_dien_thoai.setAdapter(sanPhamAdapter);
+        rcv_thuong_hieu_dien_thoai.setAdapter(sanPhamAdapterth);
 //        rcv_dien_thoai.setHasFixedSize(true);
         rcv_thuong_hieu_dien_thoai.setLayoutManager(new GridLayoutManager(getContext(),2));
 
@@ -129,8 +130,8 @@ public class ThuongHieuDTFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
-                            sanPhamAdapter.notifyDataSetChanged();
+                            mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            sanPhamAdapterth.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -156,7 +157,7 @@ public class ThuongHieuDTFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        return MainActivity.mangthuonghieudienthoai;
+        return mangthuonghieudienthoai;
     }
 
     public void anhXa(View view) {

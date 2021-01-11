@@ -1,6 +1,7 @@
 package com.vantinh.projectmobile.ultil;
 
 public class Server {
+    public static String getalldata = "https://tranvantinhit77nul.000webhostapp.com/server/getAllData.php";
     public static String duongdandienthoai = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamdienthoai.php";
     public static String duongdanthdienthoai = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamthuonghieudt.php";
     public static String duongdanlaptop = "https://tranvantinhit77nul.000webhostapp.com/server/getsanphamlaptop.php";
@@ -12,4 +13,5 @@ public class Server {
     public static String signup = "https://tranvantinhit77nul.000webhostapp.com/server/signup.php";
     public static String login = "https://tranvantinhit77nul.000webhostapp.com/server/login.php";
     public static String getfullname = "https://tranvantinhit77nul.000webhostapp.com/server/getfullname.php";
+    public static String duongdanlienquanphukien = "https://tranvantinhit77nul.000webhostapp.com/server/getlienquanpk.php";
 }

@@ -102,10 +102,10 @@ public class LaptopFragment extends Fragment {
     private List<ThuongHieu> getListDataLaptop() {
         List<ThuongHieu> list = new ArrayList<>();
 
-        list.add(new ThuongHieu(R.drawable.dell, "DELL",1));
-        list.add(new ThuongHieu(R.drawable.asus, "ASUS",3));
-        list.add(new ThuongHieu(R.drawable.acer, "ACER",2));
-        list.add(new ThuongHieu(R.drawable.hp, "HP",4));
+        list.add(new ThuongHieu(R.drawable.dell, "DELL",101));
+        list.add(new ThuongHieu(R.drawable.asus, "ASUS",102));
+        list.add(new ThuongHieu(R.drawable.acer, "ACER",103));
+        list.add(new ThuongHieu(R.drawable.hp, "HP",104));
 
         return list;
     }

@@ -1,6 +1,7 @@
 package com.vantinh.projectmobile.Fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment {
     private int statussale = 1;
     private int statusdt = 1;
     private int statuslaptop = 1;
+    InputMethodManager imm ;
     View view;
 
     public HomeFragment() {
@@ -93,6 +96,7 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://cdn.cellphones.com.vn/media/ltsoft/promotion/MI_NOTE_10.png"));
         slideModels.add(new SlideModel("https://mistore.com.vn/wp-content/uploads/2020/08/k30-ultra-1.jpg"));
         imageSlider.setImageList(slideModels,true);
+        imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         xem_san_pham_sale.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,14 +148,17 @@ public class HomeFragment extends Fragment {
                 rcv_search.addItemDecoration(decoration);
 
 
-                final SearchAdapter searchAdapter = new SearchAdapter(MainActivity.mangdienthoai, new SearchAdapter.IClickItemListener() {
+                final SearchAdapter searchAdapter = new SearchAdapter(mMainActivity.getall(), new SearchAdapter.IClickItemListener() {
                     @Override
                     public void onClickItem(SanPham sanPham) {
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
                         mMainActivity.goToCTSP(sanPham);
                         dialog.dismiss();
                     }
                 });
 
+                edt_search.requestFocus();
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 edt_search.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -172,6 +179,7 @@ public class HomeFragment extends Fragment {
                 back_search.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
                         dialog.dismiss();
                     }
                 });

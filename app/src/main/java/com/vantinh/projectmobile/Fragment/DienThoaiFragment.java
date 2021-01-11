@@ -1,6 +1,5 @@
 package com.vantinh.projectmobile.Fragment;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,27 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.Adapter.ThuongHieuAdapter;
-import com.vantinh.projectmobile.ultil.Server;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DienThoaiFragment extends Fragment {
     public static final String TAG = DienThoaiFragment.class.getName();
@@ -111,12 +98,12 @@ public class DienThoaiFragment extends Fragment {
     private List<ThuongHieu> getListData() {
         List<ThuongHieu> list = new ArrayList<>();
 
-        list.add(new ThuongHieu(R.drawable.iphone, "Iphone",1));
-        list.add(new ThuongHieu(R.drawable.samsung, "Samsung",2));
-        list.add(new ThuongHieu(R.drawable.xiaomi, "Xiaomi",5));
-        list.add(new ThuongHieu(R.drawable.vsmart, "Vsmart",6));
-        list.add(new ThuongHieu(R.drawable.realme, "Realme",4));
-        list.add(new ThuongHieu(R.drawable.oppo, "Oppo",3));
+        list.add(new ThuongHieu(R.drawable.iphone, "Iphone",1001));
+        list.add(new ThuongHieu(R.drawable.samsung, "Samsung",1002));
+        list.add(new ThuongHieu(R.drawable.xiaomi, "Xiaomi",1003));
+        list.add(new ThuongHieu(R.drawable.vsmart, "Vsmart",1004));
+        list.add(new ThuongHieu(R.drawable.realme, "Realme",1005));
+        list.add(new ThuongHieu(R.drawable.oppo, "Oppo",1006));
 
         return list;
     }
