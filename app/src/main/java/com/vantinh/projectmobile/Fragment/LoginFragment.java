@@ -270,7 +270,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 }
             }
         }
-    }//cho coi chỗ logout
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

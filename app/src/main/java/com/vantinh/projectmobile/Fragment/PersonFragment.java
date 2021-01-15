@@ -32,8 +32,8 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
     ImageView img_forget_pass, img_logout;
     Button btnLogin;
     private MainActivity mMainActivity;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor,editor2;
+    public static SharedPreferences sharedPreferences;
+    public static SharedPreferences.Editor editor;
     String FULLNAME_KEY = "fullname";
     String tennguoidung = "";
     AccessToken accessToken;
@@ -67,7 +67,7 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
         if (textID.getText() != "") {
             doi_mat_khau.setVisibility(View.VISIBLE);
             dang_xuat.setVisibility(View.VISIBLE);
-            btnLogin.setVisibility(View.INVISIBLE);
+            btnLogin.setVisibility(View.GONE);
             xin_chao.setVisibility(View.VISIBLE);
             textID.setVisibility(View.VISIBLE);
             img_forget_pass.setVisibility(View.VISIBLE);
@@ -76,8 +76,8 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
             doi_mat_khau.setVisibility(View.INVISIBLE);
             dang_xuat.setVisibility(View.INVISIBLE);
             btnLogin.setVisibility(View.VISIBLE);
-            xin_chao.setVisibility(View.INVISIBLE);
-            textID.setVisibility(View.INVISIBLE);
+            xin_chao.setVisibility(View.GONE);
+            textID.setVisibility(View.GONE);
             img_forget_pass.setVisibility(View.INVISIBLE);
             img_logout.setVisibility(View.INVISIBLE);
         }
@@ -119,7 +119,7 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
                         textID.setText(tennguoidung);
                         doi_mat_khau.setVisibility(View.VISIBLE);
                         dang_xuat.setVisibility(View.VISIBLE);
-                        btnLogin.setVisibility(View.INVISIBLE);
+                        btnLogin.setVisibility(View.GONE);
                         xin_chao.setVisibility(View.VISIBLE);
                         textID.setVisibility(View.VISIBLE);
                         img_forget_pass.setVisibility(View.VISIBLE);
@@ -130,7 +130,6 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
 
@@ -148,7 +147,7 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
             textID.setText(googleSignInResult.getSignInAccount().getDisplayName());
             doi_mat_khau.setVisibility(View.VISIBLE);
             dang_xuat.setVisibility(View.VISIBLE);
-            btnLogin.setVisibility(View.INVISIBLE);
+            btnLogin.setVisibility(View.GONE);
             xin_chao.setVisibility(View.VISIBLE);
             textID.setVisibility(View.VISIBLE);
             img_forget_pass.setVisibility(View.VISIBLE);
@@ -164,7 +163,7 @@ public class PersonFragment extends Fragment implements GoogleApiClient.OnConnec
         if (textID.getText() != "") {
             doi_mat_khau.setVisibility(View.VISIBLE);
             dang_xuat.setVisibility(View.VISIBLE);
-            btnLogin.setVisibility(View.INVISIBLE);
+            btnLogin.setVisibility(View.GONE);
             xin_chao.setVisibility(View.VISIBLE);
             textID.setVisibility(View.VISIBLE);
             img_forget_pass.setVisibility(View.VISIBLE);

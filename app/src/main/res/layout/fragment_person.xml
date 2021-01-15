@@ -55,15 +55,10 @@
                     android:id="@+id/xin_chao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xin chào"
+                    android:text="Xin chào: "
                     android:visibility="visible"
                     android:textSize="16sp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textID"
@@ -82,8 +77,6 @@
                         android:visibility="visible"
                         android:textAllCaps="false"
                         android:textSize="18sp" />
-
-                </LinearLayout>
 
             </LinearLayout>
 

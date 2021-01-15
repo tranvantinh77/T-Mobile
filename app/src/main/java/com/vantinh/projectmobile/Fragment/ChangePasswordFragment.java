@@ -44,6 +44,8 @@ public class ChangePasswordFragment extends Fragment {
     TextInputEditText confirm_password;
     Button btn_change;
 
+    MainActivity mMainActivity;
+
     View view;
     public ChangePasswordFragment() {
         // Required empty public constructor
@@ -57,6 +59,7 @@ public class ChangePasswordFragment extends Fragment {
         anhxa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+        mMainActivity = (MainActivity) getActivity();
 
         // Back
         back_change.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +68,13 @@ public class ChangePasswordFragment extends Fragment {
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePassword();
             }
         });
 
@@ -90,50 +100,20 @@ public class ChangePasswordFragment extends Fragment {
                     data[0] = email;
                     data[1] = old_password;
                     data[2] = new_password;
-                    PutData putData = new PutData(Server.login, "POST", field, data);
+                    PutData putData = new PutData(Server.changepassword, "POST", field, data);
 
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             String result = putData.getResult();
-                            if (result.equals("Login Success")) {
-
-                                final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getfullname, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        if (response != null) {
-                                            try {
-                                                JSONArray jsonArray = new JSONArray(response);
-                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-                                }){
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        HashMap<String, String> param = new HashMap<String, String>();
-                                        param.put("email", email);
-                                        return param;
-                                    }
-                                };
-
-                                requestQueue.add(stringRequest);
-                                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            if (result.equals("Change Password Success")) {
+                                Toast.makeText(getContext(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                                 if (getFragmentManager() != null) {
+                                    PersonFragment.editor.clear();
+                                    PersonFragment.editor.apply();
                                     getFragmentManager().popBackStack();
                                 }
                             } else {
-                                Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
