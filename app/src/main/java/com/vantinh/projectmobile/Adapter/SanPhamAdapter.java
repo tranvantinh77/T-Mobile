@@ -70,7 +70,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ItemHold
 
     @Override
     public int getItemCount() {
-        return arraydt.size();
+        if (arraydt != null) {
+            return arraydt.size();
+        }
+        return 0;
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder{

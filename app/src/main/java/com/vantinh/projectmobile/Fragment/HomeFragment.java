@@ -2,7 +2,6 @@ package com.vantinh.projectmobile.Fragment;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,17 +30,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.vantinh.projectmobile.Adapter.SaleAdapter;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.Adapter.SearchAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
-import com.vantinh.projectmobile.Model.SanPhamSale;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.ultil.Server;
 
@@ -63,16 +56,14 @@ public class HomeFragment extends Fragment {
     Button btn_search;
     ImageSlider imageSlider;
     ImageView shopping_cart;
-    TextView xem_san_pham_sale, xem_dien_thoai, xem_laptop;
+    TextView xem_san_pham_pk, xem_dien_thoai, xem_laptop;
     RecyclerView rcv_san_pham_sale, rcv_dien_thoai_noibat, rcv_laptop_noibat;
     Dialog dialog;
 
     private MainActivity mMainActivity;
-    SaleAdapter saleAdapter;
-    SanPhamAdapter sanPhamAdapter;
-    private int statussale = 1;
     private int statusdt = 1;
     private int statuslaptop = 1;
+    private int statusphukien = 1;
     InputMethodManager imm ;
     View view;
 
@@ -98,10 +89,10 @@ public class HomeFragment extends Fragment {
         imageSlider.setImageList(slideModels,true);
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        xem_san_pham_sale.setOnClickListener(new View.OnClickListener() {
+        xem_san_pham_pk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainActivity.goToSale();
+                mMainActivity.goToPhuKien();
             }
         });
 
@@ -125,7 +116,7 @@ public class HomeFragment extends Fragment {
                 if (PersonFragment.textID.getText() != "") {
                     mMainActivity.goToGioHang();
                 } else {
-                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
+                    mMainActivity.goToLogin();
                 }
             }
         });
@@ -187,35 +178,35 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        saleAdapter = new SaleAdapter(getDataSale(), new SaleAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(getDataPKNT(), new SanPhamAdapter.IClickItemListener() {
             @Override
-            public void onClickItem(SanPhamSale sanPhamSale) {
-
+            public void onClickItem(SanPham sanPham) {
+                mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_san_pham_sale.setAdapter(saleAdapter);
+        rcv_san_pham_sale.setAdapter(mMainActivity.sanPhamAdapter);
         rcv_san_pham_sale.setHasFixedSize(true);
         rcv_san_pham_sale.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
 
-        sanPhamAdapter = new SanPhamAdapter(getDataDT(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(getDataDT(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_dien_thoai_noibat.setAdapter(sanPhamAdapter);
+        rcv_dien_thoai_noibat.setAdapter(mMainActivity.sanPhamAdapter);
         rcv_dien_thoai_noibat.setHasFixedSize(true);
         rcv_dien_thoai_noibat.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
 
-        sanPhamAdapter = new SanPhamAdapter(getDataLaptop(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(getDataLaptop(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_laptop_noibat.setAdapter(sanPhamAdapter);
+        rcv_laptop_noibat.setAdapter(mMainActivity.sanPhamAdapter);
         rcv_laptop_noibat.setHasFixedSize(true);
         rcv_laptop_noibat.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
@@ -224,34 +215,40 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private ArrayList<SanPhamSale> getDataSale() {
+    private ArrayList<SanPham> getDataPKNT() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdansale, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanphukiennoibat, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int id = 0;
                 String ten = "";
-                Integer gia = 0;
-                Integer giasale = 0;
                 String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
-                int status = 0;
+                int idsanpham = 0;
+//                int status = 0;
                 if (response != null) {
                     try {
-                        JSONArray jsonArray = new JSONArray(response);
+                        JSONArray jsonArray =new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
-                            gia = jsonObject.getInt("gia");
-                            giasale = jsonObject.getInt("giasale");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
+                            gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            status = jsonObject.getInt("status");
-                            MainActivity.sanPhamSales.add(new SanPhamSale(id,ten,gia,giasale,hinhanh,thongsokithuat,mota,status));
-                            saleAdapter.notifyDataSetChanged();
+                            idsanpham = jsonObject.getInt("idsanpham");
+//                            status = jsonObject.getInt("status");
+                            MainActivity.phukiennoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanpham));
+                            mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -270,14 +267,14 @@ public class HomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("status", String.valueOf(statussale));
+                param.put("status", String.valueOf(statusphukien));
                 return param;
             }
         };
 
         requestQueue.add(stringRequest);
 
-        return MainActivity.sanPhamSales;
+        return MainActivity.phukiennoibat;
     }
 
     private ArrayList<SanPham> getDataDT() {
@@ -315,7 +312,7 @@ public class HomeFragment extends Fragment {
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
                             MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
-                            sanPhamAdapter.notifyDataSetChanged();
+                            mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -379,7 +376,7 @@ public class HomeFragment extends Fragment {
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
                             MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
-                            sanPhamAdapter.notifyDataSetChanged();
+                            mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -410,7 +407,7 @@ public class HomeFragment extends Fragment {
 
     public void anhXa(View view) {
         imageSlider = view.findViewById(R.id.slider);
-        xem_san_pham_sale = view.findViewById(R.id.xem_san_pham_sale);
+        xem_san_pham_pk = view.findViewById(R.id.xem_san_pham_pk);
         xem_dien_thoai = view.findViewById(R.id.xem_dien_thoai);
         xem_laptop = view.findViewById(R.id.xem_laptop);
         toolbar = view.findViewById(R.id.toolbarHome);

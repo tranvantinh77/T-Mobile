@@ -80,7 +80,7 @@ public class LaptopFragment extends Fragment {
                     mMainActivity.goToGioHang();
                     if (PersonFragment.textID.getText() != "") {
                 } else {
-                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
+                        mMainActivity.goToLogin();
                 }
             }
         });

@@ -2,11 +2,9 @@ package com.vantinh.projectmobile.Fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,25 +26,21 @@ import com.vantinh.projectmobile.Adapter.ListPhotoAdapter;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.GioHang;
-import com.vantinh.projectmobile.Model.ListPhoto;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.ultil.Server;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class ChiTietSPFragment extends Fragment {
     public static final String TAG = ChiTietSPFragment.class.getName();
-    ImageView back_ct_sp, img_chi_tiet_sp, img_sp_btsheet, shopping_ctsp;
+    ImageView back_ct_sp, img_sp_btsheet, shopping_ctsp;
     TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
     Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
     RecyclerView rcv_sp_lien_quandt,rcv_sp_lien_quanlt,rcv_sp_lien_quanpk;
@@ -114,7 +106,7 @@ public class ChiTietSPFragment extends Fragment {
                 if (PersonFragment.textID.getText() != "") {
                     mMainActivity.goToGioHang();
                 } else {
-                    Toast.makeText(getContext(), "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
+                    mMainActivity.goToLogin();
                 }
             }
         });
@@ -162,89 +154,95 @@ public class ChiTietSPFragment extends Fragment {
         btn_them_gio_hang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottmSheetDialodTheme);
+                if (PersonFragment.textID.getText() != "") {
 
-                final View bottomSheet = LayoutInflater.from(getContext()).inflate(
-                        R.layout.bottom_sheet_add_cart, linearLayout);
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottmSheetDialodTheme);
 
-                // ánh xạ bottom sheet
-                btn_minus = bottomSheet.findViewById(R.id.btn_minus);
-                btn_so_luong = bottomSheet.findViewById(R.id.btn_so_luong);
-                btn_plus = bottomSheet.findViewById(R.id.btn_plus);
-                img_sp_btsheet = bottomSheet.findViewById(R.id.img_sp_btsheet);
-                ten_sp_btsheet = bottomSheet.findViewById(R.id.ten_sp_btsheet);
-                gia_sp_btsheet = bottomSheet.findViewById(R.id.gia_sp_btsheet);
-                btn_order_or_buynow = bottomSheet.findViewById(R.id.btn_order_or_buynow);
+                    final View bottomSheet = LayoutInflater.from(getContext()).inflate(
+                            R.layout.bottom_sheet_add_cart, linearLayout);
 
-                // set thông tin sản phẩm
-                ten_sp_btsheet.setText(ten_chi_tiet_sp.getText());
-                gia_sp_btsheet.setText(gia_chi_tiet_sp.getText());
-                Picasso.get()
-                        .load(Hinhanhchitiet)
-                        .into(img_sp_btsheet);
+                    // ánh xạ bottom sheet
+                    btn_minus = bottomSheet.findViewById(R.id.btn_minus);
+                    btn_so_luong = bottomSheet.findViewById(R.id.btn_so_luong);
+                    btn_plus = bottomSheet.findViewById(R.id.btn_plus);
+                    img_sp_btsheet = bottomSheet.findViewById(R.id.img_sp_btsheet);
+                    ten_sp_btsheet = bottomSheet.findViewById(R.id.ten_sp_btsheet);
+                    gia_sp_btsheet = bottomSheet.findViewById(R.id.gia_sp_btsheet);
+                    btn_order_or_buynow = bottomSheet.findViewById(R.id.btn_order_or_buynow);
 
-                // chuyển sang giỏ hàng
-                btn_order_or_buynow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (MainActivity.manggiohang.size() > 0) {
-                            int sl = Integer.parseInt(btn_so_luong.getText().toString());
-                            boolean exists = false; for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
-                                if (MainActivity.manggiohang.get(i).getIdsp() == id) {
-                                    MainActivity.manggiohang.get(i).setSoluongsp(MainActivity.manggiohang.get(i).getSoluongsp() + sl);
-                                    MainActivity.manggiohang.get(i).setGiasp(Giachitiet * MainActivity.manggiohang.get(i).getSoluongsp());
-                                    exists = true;
+                    // set thông tin sản phẩm
+                    ten_sp_btsheet.setText(ten_chi_tiet_sp.getText());
+                    gia_sp_btsheet.setText(gia_chi_tiet_sp.getText());
+                    Picasso.get()
+                            .load(Hinhanhchitiet)
+                            .into(img_sp_btsheet);
+
+                    // chuyển sang giỏ hàng
+                    btn_order_or_buynow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (MainActivity.manggiohang.size() > 0) {
+                                int sl = Integer.parseInt(btn_so_luong.getText().toString());
+                                boolean exists = false; for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
+                                    if (MainActivity.manggiohang.get(i).getIdsp() == id) {
+                                        MainActivity.manggiohang.get(i).setSoluongsp(MainActivity.manggiohang.get(i).getSoluongsp() + sl);
+                                        MainActivity.manggiohang.get(i).setGiasp(Giachitiet * MainActivity.manggiohang.get(i).getSoluongsp());
+                                        exists = true;
+                                    }
                                 }
-                            }
-                            if (exists == false) {
+                                if (exists == false) {
+                                    int soluong = Integer.parseInt(btn_so_luong.getText().toString());
+                                    long giaMoi = soluong * Giachitiet;
+                                    MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong));
+                                }
+                            } else {
                                 int soluong = Integer.parseInt(btn_so_luong.getText().toString());
                                 long giaMoi = soluong * Giachitiet;
-                                MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong));
-                            }
-                        } else {
-                            int soluong = Integer.parseInt(btn_so_luong.getText().toString());
-                            long giaMoi = soluong * Giachitiet;
-                            MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong)); }
-                        mMainActivity.goToGioHang();
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-                // giảm số lượng
-                btn_minus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
-                        int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
-                        btn_so_luong.setText(slmoi + "");
-
-                        if (slmoi <= 1) {
-                            btn_plus.setEnabled(true);
-                            btn_minus.setEnabled(false);
+                                MainActivity.manggiohang.add(new GioHang(id,Tenchitiet,giaMoi,Hinhanhchitiet,soluong)); }
+                            mMainActivity.goToGioHang();
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+                    // giảm số lượng
+                    btn_minus.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
+                            int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
                             btn_so_luong.setText(slmoi + "");
-                        } else {
-                            btn_plus.setEnabled(true);
+
+                            if (slmoi <= 1) {
+                                btn_plus.setEnabled(true);
+                                btn_minus.setEnabled(false);
+                                btn_so_luong.setText(slmoi + "");
+                            } else {
+                                btn_plus.setEnabled(true);
+                                btn_minus.setEnabled(true);
+                                slmoi -= 1;
+                                btn_so_luong.setText(slmoi + "");
+                            }
+                        }
+                    });
+
+                    // tăng số lượng
+                    btn_plus.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
+                            int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
+                            slmoi += 1;
+                            btn_so_luong.setText(slmoi + "");
                             btn_minus.setEnabled(true);
-                            slmoi -= 1;
                             btn_so_luong.setText(slmoi + "");
                         }
-                    }
-                });
+                    });
 
-                // tăng số lượng
-                btn_plus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int sl1 = Integer.parseInt(btn_so_luong.getText().toString());
-                        int slmoi = Integer.parseInt(btn_so_luong.getText().toString());
-                        slmoi += 1;
-                        btn_so_luong.setText(slmoi + "");
-                        btn_minus.setEnabled(true);
-                        btn_so_luong.setText(slmoi + "");
-                    }
-                });
+                    bottomSheetDialog.setContentView(bottomSheet);
+                    bottomSheetDialog.show();
+                } else {
+                    mMainActivity.goToLogin();
+                }
 
-                bottomSheetDialog.setContentView(bottomSheet);
-                bottomSheetDialog.show();
             }
         });
 
@@ -255,6 +253,8 @@ public class ChiTietSPFragment extends Fragment {
                     mMainActivity.goToCTSP(sanPham);
                 }
             });
+            rcv_sp_lien_quanlt.setVisibility(View.GONE);
+            rcv_sp_lien_quanpk.setVisibility(View.GONE);
             rcv_sp_lien_quandt.setAdapter(sanPhamAdapter1);
             rcv_sp_lien_quandt.setHasFixedSize(true);
             rcv_sp_lien_quandt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -267,6 +267,8 @@ public class ChiTietSPFragment extends Fragment {
                     mMainActivity.goToCTSP(sanPham);
                 }
             });
+            rcv_sp_lien_quandt.setVisibility(View.GONE);
+            rcv_sp_lien_quanpk.setVisibility(View.GONE);
             rcv_sp_lien_quanlt.setAdapter(sanPhamAdapter2);
             rcv_sp_lien_quanlt.setHasFixedSize(true);
             rcv_sp_lien_quanlt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -280,6 +282,8 @@ public class ChiTietSPFragment extends Fragment {
                    mMainActivity.goToCTSP(sanPham);
                }
            });
+           rcv_sp_lien_quanlt.setVisibility(View.GONE);
+           rcv_sp_lien_quandt.setVisibility(View.GONE);
            rcv_sp_lien_quanpk.setAdapter(sanPhamAdapter3);
            rcv_sp_lien_quanpk.setHasFixedSize(true);
            rcv_sp_lien_quanpk.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -289,7 +293,6 @@ public class ChiTietSPFragment extends Fragment {
 
         return view;
     }
-
 
     private ArrayList<SanPham> getsplienquandt() {
        final ArrayList<SanPham> splienquan = new ArrayList<>();

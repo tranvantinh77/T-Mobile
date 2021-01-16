@@ -90,13 +90,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.7"
-                        android:text="sản phẩm giảm giá"
+                        android:text="Phụ kiện nổi bật"
                         android:textAllCaps="true"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp" />
 
                     <TextView
-                        android:id="@+id/xem_san_pham_sale"
+                        android:id="@+id/xem_san_pham_pk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"

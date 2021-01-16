@@ -1,6 +1,5 @@
 package com.vantinh.projectmobile;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -25,7 +24,6 @@ import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
 import com.vantinh.projectmobile.Fragment.GioHangFragment;
-import com.vantinh.projectmobile.Fragment.SanPhamSaleFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
 import com.vantinh.projectmobile.Fragment.LoginFragment;
@@ -37,7 +35,6 @@ import com.vantinh.projectmobile.Fragment.RegisterFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuLaptopFragment;
 import com.vantinh.projectmobile.Model.GioHang;
 import com.vantinh.projectmobile.Model.SanPham;
-import com.vantinh.projectmobile.Model.SanPhamSale;
 import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.CheckConnection;
 import com.vantinh.projectmobile.ultil.CheckInternetActivity;
@@ -52,16 +49,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
     //mang san pham
-    public static ArrayList<GioHang> manggiohang;
+    public static ArrayList<GioHang> manggiohang = new ArrayList<>();
     public static ArrayList<SanPham> mangdienthoai = new ArrayList<>();
     public static ArrayList<SanPham> manglaptop = new ArrayList<>();
     public static ArrayList<SanPham> mangphukien = new ArrayList<>();
     public static ArrayList<SanPham> mangsearch = new ArrayList<>();
 
-    public static ArrayList<SanPhamSale> mangsanphamsale = new ArrayList<>();
-    public static ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
     public static ArrayList<SanPham> dienthoainoibat = new ArrayList<>();
     public static ArrayList<SanPham> laptopnoibat = new ArrayList<>();
+    public static ArrayList<SanPham> phukiennoibat = new ArrayList<>();
     public SanPhamAdapter sanPhamAdapter;
 
     @Override
@@ -71,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
         createArray();
 
         // Check Internet
@@ -90,26 +87,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     private void createArray() {
         if (manggiohang != null) {
 
+
         } else {
             manggiohang = new ArrayList<>();
-        }
-
-        if (sanPhamSales != null) {
-
-        } else {
-            sanPhamSales = new ArrayList<>();
-        }
-
-        if (dienthoainoibat != null) {
-
-        } else {
-            dienthoainoibat = new ArrayList<>();
-        }
-
-        if (laptopnoibat != null) {
-
-        } else {
-            laptopnoibat = new ArrayList<>();
         }
 
     }
@@ -284,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         requestQueue.add(jsonArrayRequest);
         return MainActivity.mangphukien;
     }
-    
+
 
     public ArrayList<SanPham> getall() {
 //        getDataDT();
@@ -396,16 +376,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .replace(R.id.fragmentActivity, phuKienFragment);
         fragmentTransaction.addToBackStack(PhuKienFragment.TAG);
-        fragmentTransaction.commit();
-    }
-
-    public void goToSale() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        SanPhamSaleFragment sanPhamSaleFragment = new SanPhamSaleFragment();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
-                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
-                .replace(R.id.fragmentActivity, sanPhamSaleFragment);
-        fragmentTransaction.addToBackStack(SanPhamSaleFragment.TAG);
         fragmentTransaction.commit();
     }
 
