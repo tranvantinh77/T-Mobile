@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                     int id = 0;
                     String ten = "";
                     String hinhanh = "";
+                    String hinhanh2 = "";
+                    String hinhanh3 = "";
+                    String hinhanh4 = "";
                     Integer gia = 0;
                     String thongsokithuat = "";
                     String mota = "";
@@ -160,12 +163,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangdienthoai.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
+                            MainActivity.mangdienthoai.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -192,6 +198,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                     int id = 0;
                     String ten = "";
                     String hinhanh = "";
+                    String hinhanh2 = "";
+                    String hinhanh3 = "";
+                    String hinhanh4 = "";
                     Integer gia = 0;
                     String thongsokithuat = "";
                     String mota = "";
@@ -203,12 +212,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.manglaptop.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamlaptop, idsanpham));
+                            MainActivity.manglaptop.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanphamlaptop, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -235,6 +247,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                     int id = 0;
                     String ten = "";
                     String hinhanh = "";
+                    String hinhanh2 = "";
+                    String hinhanh3 = "";
+                    String hinhanh4 = "";
                     Integer gia = 0;
                     String thongsokithuat = "";
                     String mota = "";
@@ -245,11 +260,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangphukien.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanpham));
+                            MainActivity.mangphukien.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanpham));
                             sanPhamAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -266,49 +284,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         requestQueue.add(jsonArrayRequest);
         return MainActivity.mangphukien;
     }
-
-
-    public ArrayList<SanPham> getsanphamAll() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getalldata, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanphamdienthoai = 0;
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            id = jsonObject.getInt("id");
-                            ten = jsonObject.getString("ten");
-                            hinhanh = jsonObject.getString("hinhanh");
-                            gia = jsonObject.getInt("gia");
-                            thongsokithuat = jsonObject.getString("thongsokithuat");
-                            mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
-                            idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangsearch.add(new SanPham(id, ten, hinhanh, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(jsonArrayRequest);
-        return MainActivity.mangsearch;
-    }
+    
 
     public ArrayList<SanPham> getall() {
 //        getDataDT();

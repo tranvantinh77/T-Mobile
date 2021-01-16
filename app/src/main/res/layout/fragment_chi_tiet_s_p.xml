@@ -71,13 +71,12 @@
                 android:orientation="vertical"
                 android:paddingTop="15dp">
 
-                <ImageView
-                    android:id="@+id/img_chi_tiet_sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="280dp"
-                    android:layout_gravity="center"
-                    android:background="@color/colorWhite"
-                    android:src="@drawable/tmobilelogo" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
+
+                </androidx.viewpager.widget.ViewPager>
 
                 <TextView
                     android:id="@+id/ten_chi_tiet_sp"

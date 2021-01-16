@@ -288,6 +288,9 @@ public class HomeFragment extends Fragment {
                 int id = 0;
                 String ten = "";
                 String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
                 Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
@@ -302,13 +305,16 @@ public class HomeFragment extends Fragment {
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -346,6 +352,9 @@ public class HomeFragment extends Fragment {
                 int id = 0;
                 String ten = "";
                 String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
                 Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
@@ -360,13 +369,16 @@ public class HomeFragment extends Fragment {
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {

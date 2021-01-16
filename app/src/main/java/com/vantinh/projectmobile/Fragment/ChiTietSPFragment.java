@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
+import com.vantinh.projectmobile.Adapter.ListPhotoAdapter;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.GioHang;
+import com.vantinh.projectmobile.Model.ListPhoto;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
 import com.vantinh.projectmobile.ultil.Server;
@@ -38,6 +42,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -47,15 +52,20 @@ public class ChiTietSPFragment extends Fragment {
     TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
     Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
     RecyclerView rcv_sp_lien_quandt,rcv_sp_lien_quanlt,rcv_sp_lien_quanpk;
+    ViewPager view_pager;
 
     MainActivity mMainActivity;
     LinearLayout linearLayout;
     SanPhamAdapter sanPhamAdapter1, sanPhamAdapter2,sanPhamAdapter3;
 
+
     int id = 0;
     String Tenchitiet = "";
     Integer Giachitiet = 0;
     String Hinhanhchitiet = "";
+    String Hinhanhchitiet2 = "";
+    String Hinhanhchitiet3 = "";
+    String Hinhanhchitiet4 = "";
     String Thongso = "";
     String Motachitiet = "";
     int Idsanpham = 0;
@@ -63,6 +73,9 @@ public class ChiTietSPFragment extends Fragment {
 
     String ten = "";
     String hinhanh = "";
+    String hinhanh2 = "";
+    String hinhanh3 = "";
+    String hinhanh4 = "";
     Integer gia = 0;
     String thongsokithuat = "";
     String mota = "";
@@ -115,6 +128,9 @@ public class ChiTietSPFragment extends Fragment {
                 Tenchitiet = sanPham.getTen();
                 Giachitiet = sanPham.getGia();
                 Hinhanhchitiet = sanPham.getHinhanh();
+                Hinhanhchitiet2 = sanPham.getHinhanh2();
+                Hinhanhchitiet3 = sanPham.getHinhanh3();
+                Hinhanhchitiet4 = sanPham.getHinhanh4();
                 Thongso = sanPham.getThongsokithuat();
                 Motachitiet = sanPham.getMota();
                 Idsanpham = sanPham.getIDsanpham();
@@ -126,9 +142,18 @@ public class ChiTietSPFragment extends Fragment {
                 gia_chi_tiet_sp.setText("Giá: " + decimalFormat.format(Giachitiet) + " Đ");
                 thong_so_sp.setText(Thongso);
                 mo_ta_sp.setText(Motachitiet);
-                Picasso.get()
-                        .load(Hinhanhchitiet)
-                        .into(img_chi_tiet_sp);
+
+                String[] image = new String[]{
+                        Hinhanhchitiet,
+                        Hinhanhchitiet2,
+                        Hinhanhchitiet3,
+                        Hinhanhchitiet4
+                };
+                ListPhotoAdapter listPhotoAdapter = new ListPhotoAdapter(getContext(),image);
+                view_pager.setAdapter(listPhotoAdapter);
+
+
+                Log.d("aaaa",Hinhanhchitiet2);
 
             }
         }
@@ -265,6 +290,7 @@ public class ChiTietSPFragment extends Fragment {
         return view;
     }
 
+
     private ArrayList<SanPham> getsplienquandt() {
        final ArrayList<SanPham> splienquan = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -280,12 +306,15 @@ public class ChiTietSPFragment extends Fragment {
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            splienquan.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            splienquan.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
                             sanPhamAdapter1.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -330,12 +359,15 @@ public class ChiTietSPFragment extends Fragment {
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
                             idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            splienquan.add(new SanPham(id,ten,hinhanh,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
+                            splienquan.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
                             sanPhamAdapter2.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -369,7 +401,7 @@ public class ChiTietSPFragment extends Fragment {
     public void anhXa(View view) {
         back_ct_sp = view.findViewById(R.id.back_ct_sp);
         shopping_ctsp = view.findViewById(R.id.shopping_ctsp);
-        img_chi_tiet_sp = view.findViewById(R.id.img_chi_tiet_sp);
+        view_pager = view.findViewById(R.id.view_pager);
         ten_chi_tiet_sp = view.findViewById(R.id.ten_chi_tiet_sp);
         gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
