@@ -1,16 +1,21 @@
 package com.vantinh.projectmobile.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vantinh.projectmobile.Adapter.GioHangAdapter;
 import com.vantinh.projectmobile.MainActivity;
@@ -26,7 +31,7 @@ public class GioHangFragment extends Fragment {
     public static TextView txt_thong_bao, tong_tien;
     Button btn_mua_ngay;
 
-    GioHangAdapter gioHangAdapter;
+    public static GioHangAdapter gioHangAdapter;
     private MainActivity mMainActivity;
     View view;
 
@@ -43,10 +48,9 @@ public class GioHangFragment extends Fragment {
 
         anhXa(view);
 
-        gioHangAdapter = new GioHangAdapter(getContext(), MainActivity.manggiohang);
+        gioHangAdapter = new GioHangAdapter((MainActivity) getContext(), MainActivity.manggiohang);
         lv_gio_hang.setAdapter(gioHangAdapter);
         eventUtil();
-
 
         mMainActivity = (MainActivity) getActivity();
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
@@ -71,12 +75,11 @@ public class GioHangFragment extends Fragment {
             lv_gio_hang.setVisibility(View.VISIBLE);
         }
 
-
         return view;
     }
 
     // tong tien
-    private void eventUtil() {
+    public static void eventUtil() {
         long tongtien = 0;
         for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
             tongtien += MainActivity.manggiohang.get(i).getGiasp();
@@ -84,6 +87,12 @@ public class GioHangFragment extends Fragment {
         DecimalFormat decimalFomat = new DecimalFormat("###,###,###");
         tong_tien.setText(decimalFomat.format(tongtien) + " Đ");
     }
+
+//    public void xoa(final int position) {
+//
+//    }
+
+
 
     public void anhXa(View view) {
         back_gio_hang = view.findViewById(R.id.back_gio_hang);

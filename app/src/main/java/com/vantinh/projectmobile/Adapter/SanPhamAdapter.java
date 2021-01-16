@@ -47,7 +47,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ItemHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ItemHolder holder, int position) {
         final SanPham sanPham = arraydt.get(position);
         holder.ten_san_pham.setText(sanPham.getTen());
         holder.ten_san_pham.setMaxLines(2);
@@ -65,7 +65,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ItemHold
                 mIClickItemListener.onClickItem(sanPham);
             }
         });
-
 
     }
 

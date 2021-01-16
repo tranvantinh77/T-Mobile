@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vantinh.projectmobile.Fragment.GioHangFragment;
@@ -20,10 +21,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GioHangAdapter extends BaseAdapter {
-    Context context;
+    MainActivity context;
     ArrayList<GioHang> arraygiohang;
 
-    public GioHangAdapter(Context context, ArrayList<GioHang> arraygiohang) {
+    public GioHangAdapter( MainActivity context, ArrayList<GioHang> arraygiohang) {
         this.context = context;
         this.arraygiohang = arraygiohang;
     }
@@ -54,11 +55,12 @@ public class GioHangAdapter extends BaseAdapter {
 
         final TextView ten_san_pham_gh,gia_san_pham_gh;
         ImageView img_san_pham_gh;
-        final Button btn_minus_gh,btn_so_luong_gh,btn_plus_gh;
+        final Button btn_minus_gh,btn_so_luong_gh,btn_plus_gh,xoa_san_pham;
 
         ten_san_pham_gh=view.findViewById(R.id.ten_san_pham_gh);
         gia_san_pham_gh=view.findViewById(R.id.gia_san_pham_gh);
         img_san_pham_gh=view.findViewById(R.id.img_san_pham_gh);
+        xoa_san_pham=view.findViewById(R.id.xoa_san_pham);
         btn_minus_gh=view.findViewById(R.id.btn_minus_gh);
         btn_plus_gh=view.findViewById(R.id.btn_plus_gh);
         btn_so_luong_gh=view.findViewById(R.id.btn_so_luong_gh);
@@ -128,8 +130,17 @@ public class GioHangAdapter extends BaseAdapter {
             }
         });
 
+        xoa_san_pham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.xoa(i);
+            }
+        });
+
         return view;
     }
+
+
     @Override
     public CharSequence[] getAutofillOptions() {
         return new CharSequence[0];

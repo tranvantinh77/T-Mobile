@@ -1,8 +1,11 @@
 package com.vantinh.projectmobile;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public static ArrayList<SanPhamSale> sanPhamSales = new ArrayList<>();
     public static ArrayList<SanPham> dienthoainoibat = new ArrayList<>();
     public static ArrayList<SanPham> laptopnoibat = new ArrayList<>();
-
     public SanPhamAdapter sanPhamAdapter;
 
     @Override
@@ -324,7 +326,23 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         }
         return  mangsearch;
     }
-
+    public void xoa(final int position) {
+        if (manggiohang.size() <= 0) {
+            GioHangFragment.txt_thong_bao.setVisibility(View.VISIBLE);
+        } else {
+            manggiohang.remove(position);
+            GioHangFragment.gioHangAdapter.notifyDataSetInvalidated();
+            GioHangFragment.eventUtil();
+            if (MainActivity.manggiohang.size() <= 0) {
+                GioHangFragment.txt_thong_bao.setVisibility(View.VISIBLE);
+                } else {
+                GioHangFragment.txt_thong_bao.setVisibility(View.INVISIBLE);
+                GioHangFragment.gioHangAdapter.notifyDataSetInvalidated();
+                GioHangFragment.eventUtil();
+            }
+        }
+        Toast.makeText(getApplicationContext(),"Đã xóa sản phẩm", Toast.LENGTH_SHORT).show();
+    }
 
     // Chuyển Fragment
     public void goToLogin() {
@@ -486,4 +504,4 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
             personFragment.receviceDataFromLogin(fullname);
         }
     }
-}//chỗ nào xử lý case login tui viết sử lý trong cái LoginFragment
+}
