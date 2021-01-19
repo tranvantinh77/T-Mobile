@@ -71,8 +71,7 @@ public class ChiTietSPFragment extends Fragment {
     Integer gia = 0;
     String thongsokithuat = "";
     String mota = "";
-    int idsanphamdienthoai = 0;
-    int idsanphamlaptop = 0;
+    int idloaisanpham = 0;
     int idsanpham = 0;
 
     View view;
@@ -246,58 +245,24 @@ public class ChiTietSPFragment extends Fragment {
             }
         });
 
-        if ( Idsanpham == 1) {
-            sanPhamAdapter1 = new SanPhamAdapter(getsplienquandt(), new SanPhamAdapter.IClickItemListener() {
+            sanPhamAdapter1 = new SanPhamAdapter(getsplienquan(), new SanPhamAdapter.IClickItemListener() {
                 @Override
                 public void onClickItem(SanPham sanPham) {
                     mMainActivity.goToCTSP(sanPham);
                 }
             });
-            rcv_sp_lien_quanlt.setVisibility(View.GONE);
             rcv_sp_lien_quanpk.setVisibility(View.GONE);
             rcv_sp_lien_quandt.setAdapter(sanPhamAdapter1);
             rcv_sp_lien_quandt.setHasFixedSize(true);
             rcv_sp_lien_quandt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        }
-
-        if (Idsanpham == 2) {
-            sanPhamAdapter2 = new SanPhamAdapter(getlienquanlaptop(), new SanPhamAdapter.IClickItemListener() {
-                @Override
-                public void onClickItem(SanPham sanPham) {
-                    mMainActivity.goToCTSP(sanPham);
-                }
-            });
-            rcv_sp_lien_quandt.setVisibility(View.GONE);
-            rcv_sp_lien_quanpk.setVisibility(View.GONE);
-            rcv_sp_lien_quanlt.setAdapter(sanPhamAdapter2);
-            rcv_sp_lien_quanlt.setHasFixedSize(true);
-            rcv_sp_lien_quanlt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        }
-
-
-       if (Idsanpham == 3) {
-           sanPhamAdapter3 = new SanPhamAdapter(mMainActivity.getDataPhuKien(), new SanPhamAdapter.IClickItemListener() {
-               @Override
-               public void onClickItem(SanPham sanPham) {
-                   mMainActivity.goToCTSP(sanPham);
-               }
-           });
-           rcv_sp_lien_quanlt.setVisibility(View.GONE);
-           rcv_sp_lien_quandt.setVisibility(View.GONE);
-           rcv_sp_lien_quanpk.setAdapter(sanPhamAdapter3);
-           rcv_sp_lien_quanpk.setHasFixedSize(true);
-           rcv_sp_lien_quanpk.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-       }
-
-
 
         return view;
     }
 
-    private ArrayList<SanPham> getsplienquandt() {
+    private ArrayList<SanPham> getsplienquan() {
        final ArrayList<SanPham> splienquan = new ArrayList<>();
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthdienthoai, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datathuonghieu, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int id = 0;
@@ -315,9 +280,9 @@ public class ChiTietSPFragment extends Fragment {
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            splienquan.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            splienquan.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham));
                             sanPhamAdapter1.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -337,7 +302,8 @@ public class ChiTietSPFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idsanphamdienthoai", String.valueOf(Idloaisanpham));
+                param.put("idsanpham", String.valueOf(Idsanpham));
+                param.put("idloaisanpham", String.valueOf(Idloaisanpham));
                 return param;
             }
         };
@@ -346,60 +312,6 @@ public class ChiTietSPFragment extends Fragment {
 
         return splienquan;
     }
-
-    private ArrayList<SanPham> getlienquanlaptop() {
-        final ArrayList<SanPham> splienquan = new ArrayList<>();
-        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthlaptop, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                int id = 0;
-                if (response != null) {
-                    try {
-                        JSONArray jsonArray =new JSONArray(response);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            id = jsonObject.getInt("id");
-                            ten = jsonObject.getString("ten");
-                            hinhanh = jsonObject.getString("hinhanh");
-                            hinhanh2 = jsonObject.getString("hinhanh2");
-                            hinhanh3 = jsonObject.getString("hinhanh3");
-                            hinhanh4 = jsonObject.getString("hinhanh4");
-                            gia = jsonObject.getInt("gia");
-                            thongsokithuat = jsonObject.getString("thongsokithuat");
-                            mota = jsonObject.getString("mota");
-                            idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
-                            idsanpham = jsonObject.getInt("idsanpham");
-                            splienquan.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamlaptop,idsanpham));
-                            sanPhamAdapter2.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idsanphamlaptop", String.valueOf(Idloaisanpham));
-                return param;
-            }
-        };
-
-        requestQueue.add(stringRequest);
-
-        return splienquan;
-    }
-
 
     public void anhXa(View view) {
         back_ct_sp = view.findViewById(R.id.back_ct_sp);

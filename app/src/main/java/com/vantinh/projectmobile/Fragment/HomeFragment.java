@@ -61,9 +61,6 @@ public class HomeFragment extends Fragment {
     Dialog dialog;
 
     private MainActivity mMainActivity;
-    private int statusdt = 1;
-    private int statuslaptop = 1;
-    private int statusphukien = 1;
     InputMethodManager imm ;
     View view;
 
@@ -217,7 +214,7 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<SanPham> getDataPKNT() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanphukiennoibat, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.sanphamnoibat, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int id = 0;
@@ -229,8 +226,9 @@ public class HomeFragment extends Fragment {
                 Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
+                int idloaisanpham = 0;
                 int idsanpham = 0;
-//                int status = 0;
+                int status = 0;
                 if (response != null) {
                     try {
                         JSONArray jsonArray =new JSONArray(response);
@@ -245,9 +243,10 @@ public class HomeFragment extends Fragment {
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-//                            status = jsonObject.getInt("status");
-                            MainActivity.phukiennoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanpham));
+                            status = jsonObject.getInt("status");
+                            MainActivity.phukiennoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -267,7 +266,8 @@ public class HomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("status", String.valueOf(statusphukien));
+                param.put("idsanpham", String.valueOf(3));
+                param.put("status", String.valueOf(1));
                 return param;
             }
         };
@@ -279,7 +279,7 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<SanPham> getDataDT() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdandienthoainoibat, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.sanphamnoibat, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int id = 0;
@@ -291,7 +291,7 @@ public class HomeFragment extends Fragment {
                 Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
-                int idsanphamdienthoai = 0;
+                int idloaisanpham = 0;
                 int idsanpham = 0;
                 int status = 0;
                 if (response != null) {
@@ -308,10 +308,10 @@ public class HomeFragment extends Fragment {
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -331,7 +331,8 @@ public class HomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("status", String.valueOf(statusdt));
+                param.put("idsanpham", String.valueOf(1));
+                param.put("status", String.valueOf(1));
                 return param;
             }
         };
@@ -343,7 +344,7 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<SanPham> getDataLaptop() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanlaptopnoibat, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.sanphamnoibat, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int id = 0;
@@ -355,7 +356,7 @@ public class HomeFragment extends Fragment {
                 Integer gia = 0;
                 String thongsokithuat = "";
                 String mota = "";
-                int idsanphamdienthoai = 0;
+                int idloaisanpham = 0;
                 int idsanpham = 0;
                 int status = 0;
                 if (response != null) {
@@ -372,10 +373,10 @@ public class HomeFragment extends Fragment {
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamlaptop");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham,status));
+                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -395,7 +396,8 @@ public class HomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("status", String.valueOf(statuslaptop));
+                param.put("idsanpham", String.valueOf(2));
+                param.put("status", String.valueOf(1));
                 return param;
             }
         };

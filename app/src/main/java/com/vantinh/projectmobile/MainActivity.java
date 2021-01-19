@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,6 +48,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.ISendDataListener {
     public static BottomNavigationView bottomNavigationView;
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public static ArrayList<SanPham> laptopnoibat = new ArrayList<>();
     public static ArrayList<SanPham> phukiennoibat = new ArrayList<>();
     public SanPhamAdapter sanPhamAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,27 +125,28 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 }
             };
 
-
-    public ArrayList<SanPham> getDataDT() {
+    public ArrayList<SanPham> dataDienThoai() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdandienthoai, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datasanpham, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
+                int id = 0;
+                String ten = "";
+                String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
+                String thongsokithuat = "";
+                String mota = "";
+                int idloaisanpham = 0;
+                int idsanpham = 0;
+                int status = 0;
                 if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    String hinhanh2 = "";
-                    String hinhanh3 = "";
-                    String hinhanh4 = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanphamdienthoai = 0;
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
+                    try {
+                        JSONArray jsonArray =new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
@@ -149,46 +156,61 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangdienthoai.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanphamdienthoai, idsanpham));
+                            status = jsonObject.getInt("status");
+                            MainActivity.mangdienthoai.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        requestQueue.add(jsonArrayRequest);
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanpham", String.valueOf(1));
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
         return MainActivity.mangdienthoai;
     }
 
-    public ArrayList<SanPham> getDataLaptop() {
+    public ArrayList<SanPham> dataLaptop() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanlaptop, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datasanpham, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
+                int id = 0;
+                String ten = "";
+                String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
+                String thongsokithuat = "";
+                String mota = "";
+                int idloaisanpham = 0;
+                int idsanpham = 0;
+                int status = 0;
                 if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    String hinhanh2 = "";
-                    String hinhanh3 = "";
-                    String hinhanh4 = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanphamlaptop = 0;
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
+                    try {
+                        JSONArray jsonArray =new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
@@ -198,45 +220,61 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamlaptop = jsonObject.getInt("idsanphamlaptop");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.manglaptop.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanphamlaptop, idsanpham));
+                            status = jsonObject.getInt("status");
+                            MainActivity.manglaptop.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        requestQueue.add(jsonArrayRequest);
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanpham", String.valueOf(2));
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
         return MainActivity.manglaptop;
     }
 
-    public ArrayList<SanPham> getDataPhuKien() {
+    public ArrayList<SanPham> dataPhuKien() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.duongdanphukien, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datasanpham, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
+                int id = 0;
+                String ten = "";
+                String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
+                String thongsokithuat = "";
+                String mota = "";
+                int idloaisanpham = 0;
+                int idsanpham = 0;
+                int status = 0;
                 if (response != null) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    String hinhanh2 = "";
-                    String hinhanh3 = "";
-                    String hinhanh4 = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idsanpham = 0;
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
+                    try {
+                        JSONArray jsonArray =new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
                             ten = jsonObject.getString("ten");
                             hinhanh = jsonObject.getString("hinhanh");
@@ -246,25 +284,38 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            MainActivity.mangphukien.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idsanpham));
+                            status = jsonObject.getInt("status");
+                            MainActivity.mangphukien.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
                             sanPhamAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        requestQueue.add(jsonArrayRequest);
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanpham", String.valueOf(3));
+                return param;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+
         return MainActivity.mangphukien;
     }
-
 
     public ArrayList<SanPham> getall() {
 //        getDataDT();

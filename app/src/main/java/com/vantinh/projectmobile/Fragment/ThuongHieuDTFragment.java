@@ -39,7 +39,7 @@ public class ThuongHieuDTFragment extends Fragment {
     ImageView back_thuong_hieu, shopping_thdt;
     TextView ten_thuong_hieu;
     RecyclerView rcv_thuong_hieu_dien_thoai;
-    private int idsanphamdienthoai;
+    private int idloaisanpham;
     ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
     
     MainActivity mMainActivity;
@@ -87,7 +87,7 @@ public class ThuongHieuDTFragment extends Fragment {
             ThuongHieu thuongHieu = (ThuongHieu) bundleReceive.getSerializable("thuong_hieu");
             if (thuongHieu != null) {
                 ten_thuong_hieu.setText(thuongHieu.getName());
-                idsanphamdienthoai = thuongHieu.getIdthuonghieu();
+                idloaisanpham = thuongHieu.getIdthuonghieu();
             }
         }
 
@@ -106,7 +106,7 @@ public class ThuongHieuDTFragment extends Fragment {
         // lấy dữ liệu json
     private ArrayList<SanPham> getDataTH() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.duongdanthdienthoai, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datathuonghieu, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                     int id = 0;
@@ -118,7 +118,7 @@ public class ThuongHieuDTFragment extends Fragment {
                     Integer gia = 0;
                     String thongsokithuat = "";
                     String mota = "";
-                    int idsanphamdienthoai = 0;
+                    int idloaisanpham = 0;
                     int idsanpham = 0;
                 if (response != null) {
                     try {
@@ -134,9 +134,9 @@ public class ThuongHieuDTFragment extends Fragment {
                             gia = jsonObject.getInt("gia");
                             thongsokithuat = jsonObject.getString("thongsokithuat");
                             mota = jsonObject.getString("mota");
-                            idsanphamdienthoai = jsonObject.getInt("idsanphamdienthoai");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idsanphamdienthoai,idsanpham));
+                            mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham));
                             sanPhamAdapterth.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -156,7 +156,8 @@ public class ThuongHieuDTFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idsanphamdienthoai", String.valueOf(idsanphamdienthoai));
+                param.put("idsanpham", String.valueOf(1));
+                param.put("idloaisanpham", String.valueOf(idloaisanpham));
                 return param;
             }
         };

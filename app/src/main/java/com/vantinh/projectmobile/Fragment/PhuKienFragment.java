@@ -69,7 +69,7 @@ public class PhuKienFragment extends Fragment {
             }
         });
 
-        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.getDataPhuKien(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.dataPhuKien(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);

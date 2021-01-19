@@ -85,7 +85,7 @@ public class LaptopFragment extends Fragment {
             }
         });
 
-        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.getDataLaptop(), new SanPhamAdapter.IClickItemListener() {
+        mMainActivity.sanPhamAdapter = new SanPhamAdapter(mMainActivity.dataLaptop(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
