@@ -2,6 +2,9 @@ package com.vantinh.projectmobile.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,7 +32,7 @@ public class GioHangFragment extends Fragment {
     ImageView back_gio_hang;
     ListView lv_gio_hang;
     public static TextView txt_thong_bao, tong_tien;
-    Button btn_mua_ngay;
+    public static Button btn_mua_ngay;
 
     public static GioHangAdapter gioHangAdapter;
     private MainActivity mMainActivity;
@@ -74,6 +77,18 @@ public class GioHangFragment extends Fragment {
             txt_thong_bao.setVisibility(View.INVISIBLE);
             lv_gio_hang.setVisibility(View.VISIBLE);
         }
+        //btn mua ngay
+        if (MainActivity.manggiohang.size() > 0) {
+            btn_mua_ngay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mMainActivity.goToThanhToan();
+                }
+            });
+        } else {
+            btn_mua_ngay.setEnabled(false);
+            btn_mua_ngay.setBackgroundColor(Color.DKGRAY);
+        }
 
         return view;
     }
@@ -87,12 +102,6 @@ public class GioHangFragment extends Fragment {
         DecimalFormat decimalFomat = new DecimalFormat("###,###,###");
         tong_tien.setText(decimalFomat.format(tongtien) + " Đ");
     }
-
-//    public void xoa(final int position) {
-//
-//    }
-
-
 
     public void anhXa(View view) {
         back_gio_hang = view.findViewById(R.id.back_gio_hang);

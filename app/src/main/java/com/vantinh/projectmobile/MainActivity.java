@@ -1,6 +1,7 @@
 package com.vantinh.projectmobile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
 import com.vantinh.projectmobile.Fragment.GioHangFragment;
+import com.vantinh.projectmobile.Fragment.ThanhToanFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
 import com.vantinh.projectmobile.Fragment.LoginFragment;
@@ -333,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         }
         return  mangsearch;
     }
+
     public void xoa(final int position) {
         if (manggiohang.size() <= 0) {
             GioHangFragment.txt_thong_bao.setVisibility(View.VISIBLE);
@@ -342,6 +345,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
             GioHangFragment.eventUtil();
             if (MainActivity.manggiohang.size() <= 0) {
                 GioHangFragment.txt_thong_bao.setVisibility(View.VISIBLE);
+                GioHangFragment.btn_mua_ngay.setEnabled(false);
+                GioHangFragment.btn_mua_ngay.setBackgroundColor(Color.DKGRAY);
                 } else {
                 GioHangFragment.txt_thong_bao.setVisibility(View.INVISIBLE);
                 GioHangFragment.gioHangAdapter.notifyDataSetInvalidated();
@@ -491,6 +496,32 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 .replace(R.id.fragmentActivity, gioHangFragment);
 
         fragmentTransaction.addToBackStack(GioHangFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToThanhToan() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        ThanhToanFragment thanhToanFragment = new ThanhToanFragment();
+
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity, thanhToanFragment);
+
+        fragmentTransaction.addToBackStack(ThanhToanFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToHome() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        HomeFragment homeFragment = new HomeFragment();
+
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity, homeFragment);
+
+        fragmentTransaction.addToBackStack(HomeFragment.TAG);
         fragmentTransaction.commit();
     }
 

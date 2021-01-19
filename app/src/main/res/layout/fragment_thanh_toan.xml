@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Fragment.ThanhToanFragment">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_margin="20dp">
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Thông tin khách hàng"
+                   android:textSize="26sp"
+                   android:textStyle="bold"
+                   android:textColor="@color/colorPrimary"
+                   android:gravity="center"
+                   android:layout_marginBottom="10dp"/>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_marginBottom="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/ten_khach_hang"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Nhập tên khách hàng"
+                       android:textSize="16sp"
+                       android:inputType="text">
+
+                   </com.google.android.material.textfield.TextInputEditText>
+
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_marginBottom="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/email"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Nhập email"
+                       android:textSize="16sp"
+                       android:inputType="textEmailAddress">
+
+                   </com.google.android.material.textfield.TextInputEditText>
+
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_marginBottom="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/so_dien_thoai"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Nhập số điện thoại"
+                       android:textSize="16sp"
+                       android:inputType="phone">
+
+                   </com.google.android.material.textfield.TextInputEditText>
+
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_marginBottom="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/dia_chi"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Nhập địa chỉ nhận hàng"
+                       android:textSize="16sp"
+                       android:inputType="text">
+
+                   </com.google.android.material.textfield.TextInputEditText>
+
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:layout_marginBottom="10dp"
+                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/ghi_chu"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="Ghi chú">
+
+                   </com.google.android.material.textfield.TextInputEditText>
+
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <RelativeLayout
+                   android:layout_marginTop="10dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <Button
+                       android:id="@+id/btn_hủy"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="40dp"
+                       android:textColor="@color/colorWhite"
+                       android:background="@drawable/custom_button"
+                       android:textSize="18sp"
+                       android:text="Hủy"/>
+
+                   <Button
+                       android:id="@+id/btn_xac_nhan"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentEnd="true"
+                       android:layout_marginEnd="40dp"
+                       android:background="@drawable/custom_button"
+                       android:text="Xác nhận"
+                       android:textSize="18sp"
+                       android:textColor="@color/colorWhite" />
+
+               </RelativeLayout>
+
+           </LinearLayout>
+
+   </ScrollView>
+
+</LinearLayout>
