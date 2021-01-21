@@ -1,10 +1,11 @@
 package com.vantinh.projectmobile.Fragment;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -157,4 +158,5 @@ public class ThanhToanFragment extends Fragment {
         btn_xac_nhan = view.findViewById(R.id.btn_xac_nhan);
 
     }
+
 }
