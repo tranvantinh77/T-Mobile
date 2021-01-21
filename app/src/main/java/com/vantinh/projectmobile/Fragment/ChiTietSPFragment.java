@@ -41,14 +41,14 @@ import java.util.Map;
 public class ChiTietSPFragment extends Fragment {
     public static final String TAG = ChiTietSPFragment.class.getName();
     ImageView back_ct_sp, img_sp_btsheet, shopping_ctsp;
-    TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet;
+    TextView ten_chi_tiet_sp, gia_chi_tiet_sp, thong_so_sp, mo_ta_sp, ten_sp_btsheet, gia_sp_btsheet,count_gio_hang;
     Button btn_them_gio_hang, btn_minus, btn_so_luong, btn_plus, btn_order_or_buynow;
     RecyclerView rcv_sp_lien_quandt,rcv_sp_lien_quanlt,rcv_sp_lien_quanpk;
     ViewPager view_pager;
 
     MainActivity mMainActivity;
     LinearLayout linearLayout;
-    SanPhamAdapter sanPhamAdapter1, sanPhamAdapter2,sanPhamAdapter3;
+    SanPhamAdapter sanPhamAdapter1;
 
 
     int id = 0;
@@ -88,6 +88,8 @@ public class ChiTietSPFragment extends Fragment {
        anhXa(view);
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
+
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         //back
         back_ct_sp.setOnClickListener(new View.OnClickListener() {
@@ -321,6 +323,7 @@ public class ChiTietSPFragment extends Fragment {
         gia_chi_tiet_sp = view.findViewById(R.id.gia_chi_tiet_sp);
         thong_so_sp = view.findViewById(R.id.thong_so_sp);
         mo_ta_sp = view.findViewById(R.id.mo_ta_sp);
+        count_gio_hang = view.findViewById(R.id.count_gio_hangct);
         btn_them_gio_hang = view.findViewById(R.id.btn_them_gio_hang);
         rcv_sp_lien_quandt = view.findViewById(R.id.rcv_sp_lien_quandt);
         rcv_sp_lien_quanlt = view.findViewById(R.id.rcv_sp_lien_quanlt);

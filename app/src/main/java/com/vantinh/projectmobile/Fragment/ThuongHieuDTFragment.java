@@ -37,7 +37,7 @@ import java.util.Map;
 public class ThuongHieuDTFragment extends Fragment {
     public static final String TAG = ThuongHieuDTFragment.class.getName();
     ImageView back_thuong_hieu, shopping_thdt;
-    TextView ten_thuong_hieu;
+    TextView ten_thuong_hieu,count_gio_hang;
     RecyclerView rcv_thuong_hieu_dien_thoai;
     private int idloaisanpham;
     ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
@@ -57,6 +57,8 @@ public class ThuongHieuDTFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_thuong_hieu_dt, container, false);
 
         anhXa(view);
+
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -171,6 +173,7 @@ public class ThuongHieuDTFragment extends Fragment {
         back_thuong_hieu = view.findViewById(R.id.back_thuong_hieu);
         shopping_thdt = view.findViewById(R.id.shopping_thdt);
         ten_thuong_hieu = view.findViewById(R.id.ten_thuong_hieu);
+        count_gio_hang = view.findViewById(R.id.count_gio_hangthdt);
         rcv_thuong_hieu_dien_thoai = view.findViewById(R.id.rcv_thuong_hieu_dien_thoai);
         mMainActivity = (MainActivity) getActivity();
     }

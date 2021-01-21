@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
 import com.vantinh.projectmobile.MainActivity;
@@ -26,6 +27,7 @@ public class DienThoaiFragment extends Fragment {
     public static final String TAG = DienThoaiFragment.class.getName();
     ImageView back_dienthoai, shopping_dt;
     RecyclerView rcv_thuong_hieu, rcv_dien_thoai;
+    TextView count_gio_hang;
     private MainActivity mMainActivity;
     View view;
 
@@ -42,6 +44,7 @@ public class DienThoaiFragment extends Fragment {
         anhXa(view);
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         // thuong hieu
         ThuongHieuAdapter thuongHieuAdapter = new ThuongHieuAdapter(getContext());
@@ -112,6 +115,7 @@ public class DienThoaiFragment extends Fragment {
         back_dienthoai = view.findViewById(R.id.back_dienthoai);
         shopping_dt = view.findViewById(R.id.shopping_dt);
         rcv_thuong_hieu = view.findViewById(R.id.rcv_thuong_hieu);
+        count_gio_hang = view.findViewById(R.id.count_gio_hangdt);
         rcv_dien_thoai = view.findViewById(R.id.rcv_dien_thoai);
         mMainActivity = (MainActivity) getActivity();
     }

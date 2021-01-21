@@ -242,10 +242,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                                 };
 
                                 requestQueue.add(stringRequest);
-                                Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                if (getFragmentManager() != null) {
-                                    getFragmentManager().popBackStack();
-                                }
+                                    Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                    if (getFragmentManager() != null) {
+                                        getFragmentManager().popBackStack();
+                                    }
                             } else {
                                 Toast.makeText(getContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }

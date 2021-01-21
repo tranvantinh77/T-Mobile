@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
     Button btn_search;
     ImageSlider imageSlider;
     ImageView shopping_cart;
-    TextView xem_san_pham_pk, xem_dien_thoai, xem_laptop;
+    TextView xem_san_pham_pk, xem_dien_thoai, xem_laptop,count_gio_hang;
     RecyclerView rcv_san_pham_sale, rcv_dien_thoai_noibat, rcv_laptop_noibat;
     Dialog dialog;
 
@@ -85,6 +85,8 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://mistore.com.vn/wp-content/uploads/2020/08/k30-ultra-1.jpg"));
         imageSlider.setImageList(slideModels,true);
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         xem_san_pham_pk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -414,6 +416,7 @@ public class HomeFragment extends Fragment {
         xem_laptop = view.findViewById(R.id.xem_laptop);
         toolbar = view.findViewById(R.id.toolbarHome);
         shopping_cart = view.findViewById(R.id.shopping_home);
+        count_gio_hang = view.findViewById(R.id.count_gio_hang);
         rcv_san_pham_sale = view.findViewById(R.id.rcv_san_pham_sale);
         rcv_dien_thoai_noibat = view.findViewById(R.id.rcv_dien_thoai_noibat);
         rcv_laptop_noibat = view.findViewById(R.id.rcv_laptop_noibat);

@@ -101,6 +101,7 @@ public class ThanhToanFragment extends Fragment {
                                             jsonObject.put("madonhang",madonhang);
                                             jsonObject.put("masanpham",MainActivity.manggiohang.get(i).idsp);
                                             jsonObject.put("tensanpham",MainActivity.manggiohang.get(i).tensp);
+                                            jsonObject.put("hinhanhsanpham",MainActivity.manggiohang.get(i).hinhanhsp);
                                             jsonObject.put("giasanpham",MainActivity.manggiohang.get(i).giasp);
                                             jsonObject.put("soluongsanpham",MainActivity.manggiohang.get(i).soluongsp);
                                         } catch (JSONException e) {

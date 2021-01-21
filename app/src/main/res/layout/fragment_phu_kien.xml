@@ -38,14 +38,32 @@
 
             </TextView>
 
+            <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/shopping_pk"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_shopping_cart"
-                android:layout_gravity="center">
+                android:layout_gravity="center"/>
 
-            </ImageView>
+            <TextView
+                android:id="@+id/count_gio_hangpk"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#f20">
+
+            </TextView>
+
+        </RelativeLayout>
 
         </LinearLayout>
 

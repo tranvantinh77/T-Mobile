@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,7 @@ public class PhuKienFragment extends Fragment {
     public static final String TAG = PhuKienFragment.class.getName();
     ImageView back_phukien, shopping_pk;
     RecyclerView  rcv_phu_hien;
+    TextView count_gio_hang;
     MainActivity mMainActivity;
 
     View view;
@@ -46,6 +48,8 @@ public class PhuKienFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_phu_kien, container, false);
 
         anhXa(view);
+
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -87,6 +91,7 @@ public class PhuKienFragment extends Fragment {
         back_phukien = view.findViewById(R.id.back_phukien);
         shopping_pk = view.findViewById(R.id.shopping_pk);
         rcv_phu_hien = view.findViewById(R.id.rcv_phu_kien);
+        count_gio_hang = view.findViewById(R.id.count_gio_hangpk);
         mMainActivity = (MainActivity) getActivity();
     }
 }

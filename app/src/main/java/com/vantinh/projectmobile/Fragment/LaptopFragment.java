@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,7 @@ public class LaptopFragment extends Fragment {
     public static final String TAG = LaptopFragment.class.getName();
     ImageView back_laptop, shopping_lt;
     RecyclerView rcv_thuong_hieu_lt, rcv_laptop;
+    TextView count_gio_hang;
     MainActivity mMainActivity;
 
     View view;
@@ -50,6 +52,8 @@ public class LaptopFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_laptop, container, false);
 
         anhXa(view);
+
+        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
         ThuongHieuAdapter thuongHieuAdapter = new ThuongHieuAdapter(getContext());
@@ -114,6 +118,7 @@ public class LaptopFragment extends Fragment {
         back_laptop = view.findViewById(R.id.back_laptop);
         shopping_lt = view.findViewById(R.id.shopping_lt);
         rcv_thuong_hieu_lt = view.findViewById(R.id.rcv_thuong_hieu_lt);
+        count_gio_hang = view.findViewById(R.id.count_gio_hanglt);
         rcv_laptop = view.findViewById(R.id.rcv_laptop);
         mMainActivity = (MainActivity) getActivity();
     }
