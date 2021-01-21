@@ -28,6 +28,7 @@ import com.vantinh.projectmobile.Fragment.ChiTietSPFragment;
 import com.vantinh.projectmobile.Fragment.DienThoaiFragment;
 import com.vantinh.projectmobile.Fragment.ForgetFragment;
 import com.vantinh.projectmobile.Fragment.GioHangFragment;
+import com.vantinh.projectmobile.Fragment.SearchFragment;
 import com.vantinh.projectmobile.Fragment.ThanhToanFragment;
 import com.vantinh.projectmobile.Fragment.ThuongHieuDTFragment;
 import com.vantinh.projectmobile.Fragment.LaptopFragment;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
     public static ArrayList<SanPham> mangdienthoai = new ArrayList<>();
     public static ArrayList<SanPham> manglaptop = new ArrayList<>();
     public static ArrayList<SanPham> mangphukien = new ArrayList<>();
-    public static ArrayList<SanPham> mangsearch = new ArrayList<>();
 
     public static ArrayList<SanPham> dienthoainoibat = new ArrayList<>();
     public static ArrayList<SanPham> laptopnoibat = new ArrayList<>();
@@ -319,23 +319,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
         return MainActivity.mangphukien;
     }
 
-    public ArrayList<SanPham> getall() {
-//        getDataDT();
-//        getDataLaptop();
-//        getDataPhuKien();
-
-        for (SanPham sanPham : mangdienthoai) {
-            mangsearch.add(sanPham);
-        }
-        for (SanPham sanPham : manglaptop) {
-            mangsearch.add(sanPham);
-        }
-        for (SanPham sanPham : mangphukien) {
-            mangsearch.add(sanPham);
-        }
-        return  mangsearch;
-    }
-
     public void xoa(final int position) {
         if (manggiohang.size() <= 0) {
             GioHangFragment.txt_thong_bao.setVisibility(View.VISIBLE);
@@ -483,6 +466,23 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.ISe
                 .replace(R.id.fragmentActivity, chiTietSPFragment);
 
         fragmentTransaction.addToBackStack(ChiTietSPFragment.TAG);
+        fragmentTransaction.commit();
+    }
+
+    public void goToSearch(SanPham sanPham) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        SearchFragment searchFragment = new SearchFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("dien_thoai", sanPham);
+        searchFragment.setArguments(bundle);
+
+        fragmentTransaction.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                .replace(R.id.fragmentActivity, searchFragment);
+
+        fragmentTransaction.addToBackStack(searchFragment.TAG);
         fragmentTransaction.commit();
     }
 

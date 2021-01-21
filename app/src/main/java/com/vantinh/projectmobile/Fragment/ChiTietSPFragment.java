@@ -89,7 +89,9 @@ public class ChiTietSPFragment extends Fragment {
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
-        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        if (MainActivity.manggiohang.size() > 0) {
+            count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        }
 
         //back
         back_ct_sp.setOnClickListener(new View.OnClickListener() {

@@ -58,7 +58,9 @@ public class ThuongHieuLaptopFragment extends Fragment {
 
         anhXa(view);
 
-        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        if (MainActivity.manggiohang.size() > 0) {
+            count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        }
 
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 

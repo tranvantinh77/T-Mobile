@@ -44,7 +44,9 @@ public class DienThoaiFragment extends Fragment {
         anhXa(view);
         MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
 
-        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        if (MainActivity.manggiohang.size() > 0) {
+            count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        }
 
         // thuong hieu
         ThuongHieuAdapter thuongHieuAdapter = new ThuongHieuAdapter(getContext());

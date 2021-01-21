@@ -30,6 +30,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -56,12 +57,13 @@ public class HomeFragment extends Fragment {
     Button btn_search;
     ImageSlider imageSlider;
     ImageView shopping_cart;
-    TextView xem_san_pham_pk, xem_dien_thoai, xem_laptop,count_gio_hang;
+    TextView xem_san_pham_pk, xem_dien_thoai, xem_laptop, count_gio_hang;
     RecyclerView rcv_san_pham_sale, rcv_dien_thoai_noibat, rcv_laptop_noibat;
     Dialog dialog;
 
     private MainActivity mMainActivity;
-    InputMethodManager imm ;
+    ArrayList<SanPham> list;
+    InputMethodManager imm;
     View view;
 
     public HomeFragment() {
@@ -83,10 +85,12 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://cdn.tgdd.vn/2020/11/banner/800-300-800x300-6.png"));
         slideModels.add(new SlideModel("https://cdn.cellphones.com.vn/media/ltsoft/promotion/MI_NOTE_10.png"));
         slideModels.add(new SlideModel("https://mistore.com.vn/wp-content/uploads/2020/08/k30-ultra-1.jpg"));
-        imageSlider.setImageList(slideModels,true);
+        imageSlider.setImageList(slideModels, true);
         imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        if (MainActivity.manggiohang.size() > 0) {
+            count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        }
 
         xem_san_pham_pk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,17 +142,18 @@ public class HomeFragment extends Fragment {
                 rcv_search.addItemDecoration(decoration);
 
 
-                final SearchAdapter searchAdapter = new SearchAdapter(mMainActivity.getall(), new SearchAdapter.IClickItemListener() {
+                edt_search.requestFocus();
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+                final SearchAdapter searchAdapter = new SearchAdapter(getall(), new SearchAdapter.IClickItemListener() {
                     @Override
                     public void onClickItem(SanPham sanPham) {
                         imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        mMainActivity.goToCTSP(sanPham);
+                        mMainActivity.goToSearch(sanPham);
                         dialog.dismiss();
                     }
                 });
 
-                edt_search.requestFocus();
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 edt_search.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -156,8 +161,9 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            searchAdapter.getFilter().filter(s);
-                            rcv_search.setAdapter(searchAdapter);
+                        searchAdapter.getFilter().filter(s);
+                        rcv_search.setAdapter(searchAdapter);
+
                     }
 
                     @Override
@@ -213,6 +219,59 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    public ArrayList<SanPham> getall() {
+        list = new ArrayList<>();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.dataAll, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                int id = 0;
+                String ten = "";
+                String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
+                String thongsokithuat = "";
+                String mota = "";
+                int idloaisanpham = 0;
+                int idsanpham = 0;
+                int status = 0;
+                if (response != null) {
+                    try {
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            id = jsonObject.getInt("id");
+                            ten = jsonObject.getString("ten");
+                            hinhanh = jsonObject.getString("hinhanh");
+                            hinhanh2 = jsonObject.getString("hinhanh2");
+                            hinhanh3 = jsonObject.getString("hinhanh3");
+                            hinhanh4 = jsonObject.getString("hinhanh4");
+                            gia = jsonObject.getInt("gia");
+                            thongsokithuat = jsonObject.getString("thongsokithuat");
+                            mota = jsonObject.getString("mota");
+                            idloaisanpham = jsonObject.getInt("idloaisanpham");
+                            idsanpham = jsonObject.getInt("idsanpham");
+                            status = jsonObject.getInt("status");
+                            list.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idloaisanpham, idsanpham, status));
+                            mMainActivity.sanPhamAdapter.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonArrayRequest);
+
+        return list;
+    }
 
     private ArrayList<SanPham> getDataPKNT() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -233,7 +292,7 @@ public class HomeFragment extends Fragment {
                 int status = 0;
                 if (response != null) {
                     try {
-                        JSONArray jsonArray =new JSONArray(response);
+                        JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
@@ -248,7 +307,7 @@ public class HomeFragment extends Fragment {
                             idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.phukiennoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
+                            MainActivity.phukiennoibat.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idloaisanpham, idsanpham, status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -257,14 +316,13 @@ public class HomeFragment extends Fragment {
                 }
 
 
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
@@ -298,7 +356,7 @@ public class HomeFragment extends Fragment {
                 int status = 0;
                 if (response != null) {
                     try {
-                        JSONArray jsonArray =new JSONArray(response);
+                        JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
@@ -313,7 +371,7 @@ public class HomeFragment extends Fragment {
                             idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.dienthoainoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
+                            MainActivity.dienthoainoibat.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idloaisanpham, idsanpham, status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -322,14 +380,13 @@ public class HomeFragment extends Fragment {
                 }
 
 
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
@@ -363,7 +420,7 @@ public class HomeFragment extends Fragment {
                 int status = 0;
                 if (response != null) {
                     try {
-                        JSONArray jsonArray =new JSONArray(response);
+                        JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
@@ -378,7 +435,7 @@ public class HomeFragment extends Fragment {
                             idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
                             status = jsonObject.getInt("status");
-                            MainActivity.laptopnoibat.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
+                            MainActivity.laptopnoibat.add(new SanPham(id, ten, hinhanh, hinhanh2, hinhanh3, hinhanh4, gia, thongsokithuat, mota, idloaisanpham, idsanpham, status));
                             mMainActivity.sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -387,14 +444,13 @@ public class HomeFragment extends Fragment {
                 }
 
 
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();

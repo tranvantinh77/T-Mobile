@@ -1,16 +1,17 @@
 package com.vantinh.projectmobile.Fragment;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,33 +21,33 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.vantinh.projectmobile.Adapter.SanPhamAdapter;
+import com.vantinh.projectmobile.Adapter.SearchAdapter;
 import com.vantinh.projectmobile.MainActivity;
 import com.vantinh.projectmobile.Model.SanPham;
 import com.vantinh.projectmobile.R;
-import com.vantinh.projectmobile.Model.ThuongHieu;
 import com.vantinh.projectmobile.ultil.Server;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ThuongHieuDTFragment extends Fragment {
-    public static final String TAG = ThuongHieuDTFragment.class.getName();
-    ImageView back_thuong_hieu, shopping_thdt;
-    TextView ten_thuong_hieu,count_gio_hang;
-    RecyclerView rcv_thuong_hieu_dien_thoai;
-    private int idloaisanpham;
-    ArrayList<SanPham> mangthuonghieudienthoai = new ArrayList<>();
-    
+public class SearchFragment extends Fragment {
+    public static final String TAG = SearchFragment.class.getName();
+    RecyclerView rcv_search;
+    ImageView back_search, shopping_search;
+    TextView count_gio_hang_search;
+    int Idsanpham = 0;
+    int Idloaisanpham = 0;
+    ArrayList<SanPham> listDataSearch;
+    SanPhamAdapter sanPhamAdapter;
     MainActivity mMainActivity;
-    SanPhamAdapter sanPhamAdapterth;
 
-    View view;
-    public ThuongHieuDTFragment() {
+    public SearchFragment() {
 
     }
 
@@ -54,18 +55,22 @@ public class ThuongHieuDTFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_thuong_hieu_dt, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         anhXa(view);
+        mMainActivity = (MainActivity) getActivity();
 
-        if (MainActivity.manggiohang.size() > 0) {
-            count_gio_hang.setText(String.valueOf(MainActivity.manggiohang.size()));
+        Bundle bundleReceive = getArguments();
+        if (bundleReceive != null) {
+            SanPham sanPham = (SanPham) bundleReceive.getSerializable("dien_thoai");
+            if (sanPham != null) {
+                Idsanpham = sanPham.getIDsanpham();
+                Idloaisanpham = sanPham.getIDloaisanpham();
+                Log.d("a", String.valueOf(Idloaisanpham));
+                Log.d("b", String.valueOf(Idsanpham));
+            }
         }
 
-        MainActivity.bottomNavigationView.setVisibility(View.INVISIBLE);
-
-        // Back
-        back_thuong_hieu.setOnClickListener(new View.OnClickListener() {
+        back_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager() != null) {
@@ -74,56 +79,52 @@ public class ThuongHieuDTFragment extends Fragment {
             }
         });
 
-        shopping_thdt.setOnClickListener(new View.OnClickListener() {
+        if (MainActivity.manggiohang.size() > 0) {
+            count_gio_hang_search.setText(String.valueOf(MainActivity.manggiohang.size()));
+        }
+
+        shopping_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (PersonFragment.textID.getText() != "") {
                     mMainActivity.goToGioHang();
                 } else {
-                    mMainActivity.goToLogin();;
+                    mMainActivity.goToLogin();
                 }
             }
         });
 
-        // Nhận dữ liệu
-        Bundle bundleReceive = getArguments();
-        if (bundleReceive != null) {
-            ThuongHieu thuongHieu = (ThuongHieu) bundleReceive.getSerializable("thuong_hieu");
-            if (thuongHieu != null) {
-                ten_thuong_hieu.setText(thuongHieu.getName());
-                idloaisanpham = thuongHieu.getIdthuonghieu();
-            }
-        }
-
-        sanPhamAdapterth = new SanPhamAdapter(getDataTH(), new SanPhamAdapter.IClickItemListener() {
+        sanPhamAdapter = new SanPhamAdapter(dataSearch(), new SanPhamAdapter.IClickItemListener() {
             @Override
             public void onClickItem(SanPham sanPham) {
                 mMainActivity.goToCTSP(sanPham);
             }
         });
-        rcv_thuong_hieu_dien_thoai.setAdapter(sanPhamAdapterth);
-//        rcv_dien_thoai.setHasFixedSize(true);
-        rcv_thuong_hieu_dien_thoai.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rcv_search.setAdapter(sanPhamAdapter);
+        rcv_search.setHasFixedSize(true);
+        rcv_search.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         return view;
     }
-        // lấy dữ liệu json
-    private ArrayList<SanPham> getDataTH() {
-        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datathuonghieu, new Response.Listener<String>() {
+
+    public ArrayList<SanPham> dataSearch() {
+        listDataSearch = new ArrayList<>();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.datasearch, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                    int id = 0;
-                    String ten = "";
-                    String hinhanh = "";
-                    String hinhanh2 = "";
-                    String hinhanh3 = "";
-                    String hinhanh4 = "";
-                    Integer gia = 0;
-                    String thongsokithuat = "";
-                    String mota = "";
-                    int idloaisanpham = 0;
-                    int idsanpham = 0;
+                int id = 0;
+                String ten = "";
+                String hinhanh = "";
+                String hinhanh2 = "";
+                String hinhanh3 = "";
+                String hinhanh4 = "";
+                Integer gia = 0;
+                String thongsokithuat = "";
+                String mota = "";
+                int idloaisanpham = 0;
+                int idsanpham = 0;
+                int status = 0;
                 if (response != null) {
                     try {
                         JSONArray jsonArray =new JSONArray(response);
@@ -140,8 +141,9 @@ public class ThuongHieuDTFragment extends Fragment {
                             mota = jsonObject.getString("mota");
                             idloaisanpham = jsonObject.getInt("idloaisanpham");
                             idsanpham = jsonObject.getInt("idsanpham");
-                            mangthuonghieudienthoai.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham));
-                            sanPhamAdapterth.notifyDataSetChanged();
+                            status = jsonObject.getInt("status");
+                            listDataSearch.add(new SanPham(id,ten,hinhanh,hinhanh2, hinhanh3, hinhanh4,gia,thongsokithuat,mota,idloaisanpham,idsanpham,status));
+                            sanPhamAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -160,24 +162,21 @@ public class ThuongHieuDTFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idsanpham", String.valueOf(1));
-                param.put("idloaisanpham", String.valueOf(idloaisanpham));
+                param.put("idloaisanpham", String.valueOf(Idloaisanpham));
+                param.put("idsanpham", String.valueOf(Idsanpham));
                 return param;
             }
         };
 
         requestQueue.add(stringRequest);
 
-        return mangthuonghieudienthoai;
+        return listDataSearch;
     }
 
     public void anhXa(View view) {
-        back_thuong_hieu = view.findViewById(R.id.back_thuong_hieu);
-        shopping_thdt = view.findViewById(R.id.shopping_thdt);
-        ten_thuong_hieu = view.findViewById(R.id.ten_thuong_hieu);
-        count_gio_hang = view.findViewById(R.id.count_gio_hangthdt);
-        rcv_thuong_hieu_dien_thoai = view.findViewById(R.id.rcv_thuong_hieu_dien_thoai);
-        mMainActivity = (MainActivity) getActivity();
+        rcv_search = view.findViewById(R.id.rcv_search);
+        back_search = view.findViewById(R.id.back_search);
+        shopping_search = view.findViewById(R.id.shopping_search);
+        count_gio_hang_search = view.findViewById(R.id.count_gio_hang_search);
     }
-
 }

@@ -10,5 +10,7 @@ public class Server {
     public static String datathuonghieu = "https://tranvantinhit77nul.000webhostapp.com/server/datathuonghieu.php";
     public static String insertdonhang = "https://tranvantinhit77nul.000webhostapp.com/server/donhang.php";
     public static String chitietdonhang = "https://tranvantinhit77nul.000webhostapp.com/server/chitietdonhang.php";
+    public static String datasearch = "https://tranvantinhit77nul.000webhostapp.com/server/datasearch.php";
+    public static String dataAll = "https://tranvantinhit77nul.000webhostapp.com/server/dataAll.php";
 
 }
